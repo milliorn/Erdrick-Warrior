@@ -22,7 +22,7 @@
     <OutputPath>bin\Release\Plugins\$(MSBuildProjectName)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-<PackageReference Include="NWN.Managed" Version="8193.20.45-dev.12" ExcludeAssets="runtime" />
+<PackageReference Include="NWN.Managed" Version="8193.20.45-dev.14" ExcludeAssets="runtime" />
     <PackageReference Include="Discord.Webhook" Version="1.0.7" />
     <PackageReference Include="discord-webhook-client" Version="2.0.0" />
   </ItemGroup>
