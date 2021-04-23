@@ -1,8 +1,7 @@
 using NWN.API;
-using NWN.API.Events;
 using NWN.Services;
 
-namespace Services.Module
+namespace Services.PlayerCharacter
 {
     [ServiceBinding(typeof(Rest))]
     public class Rest
@@ -20,7 +19,7 @@ namespace Services.Module
                 case NWN.API.Constants.RestEventType.Finished:
                 case NWN.API.Constants.RestEventType.Cancelled:
                     rest.Player.FadeFromBlack((float)0.003);
-                    rest.Player.SaveCharacter();
+                    Module.Extensions.SaveCharacter(rest.Player);
                     break;
                 default: break;
             }

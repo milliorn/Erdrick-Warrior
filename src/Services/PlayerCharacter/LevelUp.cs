@@ -4,7 +4,7 @@ using NWN.API.Constants;
 using NWN.Services;
 using System;
 
-namespace Services.Module
+namespace Services.PlayerCharacter
 {
     [ServiceBinding(typeof(LevelUp))]
 
@@ -12,7 +12,7 @@ namespace Services.Module
     {
         public LevelUp() => NwModule.Instance.OnPlayerLevelUp += async levelUp =>
             {
-                levelUp.Player.SaveCharacter();
+                Module.Extensions.SaveCharacter(levelUp.Player);
                 levelUp.Player.ForceRest();
                 await NwTask.Delay(TimeSpan.FromSeconds(0.0));
                 levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpLightningS));
