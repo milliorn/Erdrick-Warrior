@@ -12,7 +12,20 @@ namespace Services.Client
         /* Auto-Kill if we logout while in combat state */
         public static int DeathLog(this NwPlayer leave) => leave.IsInCombat ? leave.HP = -1 : leave.HP;
         public static string StripDashes(string uuid) => uuid = uuid.Replace("-", "");
-        public static void StoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.UUID.ToUUIDString())).Value = player.HP;
+        public static void StoreHitPoints(this NwPlayer player)
+        {
+            var id = player.UUID.ToUUIDString();
+
+            if (player.GetCampaignVariable<int>("Hit_Points", id) == null)
+            {
+                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.HP;
+            }
+            else
+            {
+                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.HP;
+            }
+        }
+
         public static void RestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.UUID.ToUUIDString())).Value;
 
         public static async void PrintLogout(this NwPlayer leave)
@@ -30,7 +43,7 @@ namespace Services.Client
                 Log.Info($"LOGOUT:{$"NAME:{leave.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
             }
         }
-        
+
         public static bool ClientCheckName(this NwPlayer enter, string text)
         {
             foreach (var censoredWord in text.Split(' ').Where(censoredWord => Extensions.WordFilter.Contains(censoredWord.ToLower())))
