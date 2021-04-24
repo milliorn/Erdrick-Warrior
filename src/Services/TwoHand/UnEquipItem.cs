@@ -1,5 +1,4 @@
 using NWN.API;
-
 using NWN.Services;
 
 namespace Services.TwoHand
@@ -7,12 +6,15 @@ namespace Services.TwoHand
     [ServiceBinding(typeof(UnEquipItem))]
     public class UnEquipItem
     {
-        public static void OnUnEquip() => NwModule.Instance.OnPlayerUnequipItem += unequipItem =>
+        public UnEquipItem()
         {
-            if (unequipItem.UnequippedBy is NwPlayer)
+            NwModule.Instance.OnPlayerUnequipItem += unequipItem =>
             {
-                unequipItem.UnequippedBy.RemoveBuff();
-            }
-        };
+                if (unequipItem.Item is NwItem && unequipItem.UnequippedBy is NwPlayer player)
+                {
+                    player.RemoveBuff();
+                }
+            };
+        }
     }
 }
