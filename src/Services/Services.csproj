@@ -29,7 +29,7 @@
     </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NWN.Anvil" Version="8193.22.20-dev.0"/>
-    <PackageReference Include="Discord.Webhook" Version="1.0.7"/>
+    <PackageReference Include="Discord.Webhook" Version="1.0.8"/>
     <PackageReference Include="discord-webhook-client" Version="2.0.0"/>
   </ItemGroup>
 </Project>
