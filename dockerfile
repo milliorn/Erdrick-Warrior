@@ -1,14 +1,22 @@
 # build the module file
-FROM index.docker.io/nwntools/nasher:latest AS moduleBuild
+FROM index.docker.io/nwntools/nasher:0.15.0 AS moduleBuild
 ADD . /src/moduleBuild/
 WORKDIR /src/moduleBuild
 RUN nasher pack
 
 # Pull Dotnet image to build the project
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-ADD . /Build
-WORKDIR /Build
-RUN dotnet publish src/Services/Services.csproj -c Release
+ADD ./src/services /Build
+# build EldritchWarrior code
+WORKDIR /Build/EldritchWarrior
+RUN dotnet publish -c Release -o out 
+
+# Build the final NWN server image
+FROM nwndotnet/anvil:b48cf825
+# copy module
+COPY --from=moduleBuild /src/moduleBuild/*.mod /nwn/data/data/mod
+# copy built dll's
+COPY --from=build /Build/EldritchWarrior/out /nwn/anvil/Plugins/EldritchWarrior/
 
 ENV NWN_SERVERNAME=DotnetTest \
   NWN_MODULE=Eldritch_Warrior \

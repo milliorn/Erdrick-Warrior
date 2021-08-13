@@ -1,1 +1,1 @@
-docker run --rm -it -v %cd%:/nasher squattingmonk/nasher:latest pack
+docker run --rm -it -v %cd%:/nasher nwntools/nasher:0.15.0 pack

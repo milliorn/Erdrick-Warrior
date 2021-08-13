@@ -1,1 +1,1 @@
-docker run --rm -it -v %cd%:/nasher squattingmonk/nasher:latest unpack --file:Eldritch_Warrior.mod --yes --removeDeleted
+docker run --rm -it -v %cd%:/nasher nwntools/nasher:0.15.0 unpack --file:Eldritch_Warrior.mod
