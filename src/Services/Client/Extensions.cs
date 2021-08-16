@@ -3,43 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using NLog.Fluent;
 using Anvil.API;
-using NWN.API.Constants;
+
 
 namespace Services.Client
 {
     public static class Extensions
     {
         /* Auto-Kill if we logout while in combat state */
-        public static int DeathLog(this NwPlayer leave) => leave.IsInCombat ? leave.HP = -1 : leave.HP;
+        public static int DeathLog(this NwPlayer leave) => leave.ControlledCreature.IsInCombat ? leave.ControlledCreature.HP = -1 : leave.ControlledCreature.HP;
         public static string StripDashes(string uuid) => uuid = uuid.Replace("-", "");
-        public static void StoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.UUID.ToUUIDString())).Value = player.HP;
+        public static void StoreHitPoints(this NwPlayer player) => player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", StripDashes(player.ControlledCreature.UUID.ToUUIDString())).Value = player.ControlledCreature.HP;
         public static void RestoreHitPoints(this NwPlayer player)
         {
-            var id = player.UUID.ToUUIDString();
+            var id = player.ControlledCreature.UUID.ToUUIDString();
 
-            if (player.GetCampaignVariable<int>("Hit_Points", id) == null)
+            if (player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", id) == null)
             {
-                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.HP;
+                player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
             }
             else
             {
-                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.HP;
+                player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
             }
         }
 
         public static async void PrintLogout(this NwPlayer leave)
         {
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.BicFileName.ColorString(Color.WHITE)}";
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.ControlledCreature.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.BicFileName.ColorString(Color.WHITE)}";
 
             if (leave.IsDM)
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(Color.GREEN)}:{colorString}");
-                Log.Info($"DM Exiting:{$"NAME:{leave.Name} ID:{leave.CDKey}"}.");
+                Log.Info($"DM Exiting:{$"NAME:{leave.ControlledCreature.Name} ID:{leave.CDKey}"}.");
             }
             else
             {
                 await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
-                Log.Info($"LOGOUT:{$"NAME:{leave.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
+                Log.Info($"LOGOUT:{$"NAME:{leave.ControlledCreature.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
             }
         }
 
@@ -47,8 +47,8 @@ namespace Services.Client
         {
             foreach (var censoredWord in text.Split(' ').Where(censoredWord => Extensions.WordFilter.Contains(censoredWord.ToLower())))
             {
-                enter.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Name}");
-                Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Name}");
+                enter.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.ControlledCreature.Name}");
+                Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.ControlledCreature.Name}");
                 return true;
             }
 
@@ -57,8 +57,8 @@ namespace Services.Client
 
         public static void ValidateDM(this NwPlayer enter)
         {
-            string clientDM = $"NAME:{enter.Name} ID:{enter.CDKey}";
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
+            string clientDM = $"NAME:{enter.ControlledCreature.Name} ID:{enter.CDKey}";
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.ControlledCreature.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
 
             if (enter.IsDM && Module.Extensions.DMList.ContainsKey(enter.CDKey))
             {
@@ -77,9 +77,9 @@ namespace Services.Client
         public static void WelcomeMessage(this NwPlayer enter)
         {
             enter.SendServerMessage("Welcome to the server!".ColorString(SelectRandomColor(new(0, 0, 0), (Random)(new()))));
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.ControlledCreature.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
             NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
-            Log.Info($"LOGIN:{$"NAME:{enter.Name} ID:{enter.CDKey} BIC:{enter.BicFileName}"}.");
+            Log.Info($"LOGIN:{$"NAME:{enter.ControlledCreature.Name} ID:{enter.CDKey} BIC:{enter.BicFileName}"}.");
         }
 
         private static Color SelectRandomColor(Color color, Random random)

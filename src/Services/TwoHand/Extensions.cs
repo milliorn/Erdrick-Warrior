@@ -1,6 +1,6 @@
 //using NLog;
 using Anvil.API;
-using NWN.API.Constants;
+
 
 namespace Services.TwoHand
 {

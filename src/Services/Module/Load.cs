@@ -2,10 +2,8 @@ using System;
 using System.Globalization;
 using System.Linq;
 using Anvil.API;
-using NWN.API.Constants;
-using Anvil.Services;
 
-using NWNX.API;
+using Anvil.Services;
 
 namespace Services.Module
 {

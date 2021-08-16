@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using NLog.Fluent;
 using Anvil.API;
 using Anvil.API.Events;
+using NLog.Fluent;
+
 
 namespace Services.ChatSystem
 {
@@ -33,7 +34,7 @@ namespace Services.ChatSystem
                 else
                 {
                     playerCount++;
-                    stringBuilder.Append($"{pc.ControlledCreature.ControlledCreature.Name.ColorString(Color.PINK)} | {pc.Area.ControlledCreature.Name}\n".ColorString(Color.WHITE));
+                    stringBuilder.Append($"{pc.ControlledCreature.Name.ColorString(Color.PINK)} | {pc.Area.ControlledCreature.Name}\n".ColorString(Color.WHITE));
                 }
             }
 
@@ -47,16 +48,16 @@ namespace Services.ChatSystem
 
         public static void SetArmBone(this NwPlayer player)
         {
-            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
-            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
-            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
         }
 
         public static void SetArmNormal(this NwPlayer player)
         {
-            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
-            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
-            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
         }
 
         public static CreatureTailType SetTail(this NwPlayer player, string[] chatArray)

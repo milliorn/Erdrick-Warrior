@@ -1,7 +1,7 @@
 using System.Linq;
 using NLog;
 using Anvil.API;
-using NWN.API.Constants;
+
 using Anvil.API.Events;
 using Anvil.Services;
 
@@ -32,7 +32,7 @@ namespace Services.LootSplitter
 
         private static void DestroyItemForGold(PlaceableEvents.OnDisturbed obj)
         {
-            NwPlayer pc = (NwPlayer)obj.Disturber;
+            var pc = (NwPlayer)obj.Disturber;
 
             if (obj.DisturbedItem.BaseItemType == BaseItemType.Gold)
             {

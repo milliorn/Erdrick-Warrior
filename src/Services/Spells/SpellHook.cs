@@ -1,6 +1,6 @@
 using System.Linq;
 using Anvil.API;
-using NWN.API.Constants;
+
 using Anvil.API.Events;
 using Anvil.Services;
 

@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using NLog;
 
 using Anvil.API;
