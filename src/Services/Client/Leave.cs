@@ -1,7 +1,7 @@
 using NLog;
 
-using NWN.API;
-using NWN.Services;
+using Anvil.API;
+using Anvil.Services;
 
 namespace Services.Client
 {
@@ -17,7 +17,7 @@ namespace Services.Client
                 player.PrintLogout();
 
                 if (player.IsDM) return;
-                
+
                 player.DeathLog();
                 player.StoreHitPoints();
             }

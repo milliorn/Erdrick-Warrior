@@ -1,9 +1,9 @@
+using Microsoft.VisualBasic;
 using NLog;
 
-using NWN.API;
-using NWN.API.Constants;
-using NWN.API.Events;
-using NWN.Services;
+using Anvil.API;
+using Anvil.API.Events;
+using Anvil.Services;
 
 namespace Services.ChatSystem
 {
@@ -28,13 +28,13 @@ namespace Services.ChatSystem
             {
                 case "xp":
                     _ = int.TryParse(chatArray[1], out int x);
-                    chat.Sender.Xp += x;
+                    chat.Sender.ControlledCreature.Xp += x;
                     break;
                 case "live":
-                    chat.Sender.HP = chat.Sender.HP = chat.Sender.MaxHP;
+                    chat.Sender.ControlledCreature.HP = chat.Sender.ControlledCreature.HP = chat.Sender.ControlledCreature.MaxHP;
                     break;
                 case "dead":
-                    chat.Sender.ApplyEffect(EffectDuration.Instant, NWN.API.Effect.Damage(1));
+                    chat.Sender.ControlledCreature.ApplyEffect(EffectDuration.Instant, NWN.API.Effect.Damage(1));
                     break;
                 case "roster":
                     chat.Sender.Roster();
@@ -94,7 +94,7 @@ namespace Services.ChatSystem
                     chat.Sender.SetVisual(chatArray);
                     break;
                 case "lfg":
-                    NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
+                    NwModule.Instance.SpeakString($"{chat.Sender.ControlledCreature.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
                     break;
                 case "save":
                     chat.Sender.ExportCharacter();

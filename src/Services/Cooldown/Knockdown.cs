@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using NWN.API;
-using NWN.API.Constants;
-using NWN.Services;
+using Anvil.API;
+using Anvil.API.Constants;
+using Anvil.Services;
 using NLog;
 
 namespace Services.Cooldown
@@ -29,7 +29,7 @@ namespace Services.Cooldown
                 {
                     Log.Info($"onFeatUse.Feat == {onFeatUse.Feat}");
 
-                    if (LastUsed.TryGetValue(player.UUID, out var lastUsed))
+                    if (LastUsed.TryGetValue(player.ControlledCreature.UUID, out var lastUsed))
                     {
                         Log.Info($"lastUsed == {lastUsed}");
 
@@ -44,8 +44,8 @@ namespace Services.Cooldown
                     else
                     {
                         Log.Info($"limit == {limit}");
-                        LastUsed[player.UUID] = DateTime.UtcNow;
-                        Log.Info($"LastUsed[player.UUID] == {LastUsed[player.UUID]}");
+                        LastUsed[player.ControlledCreature.UUID] = DateTime.UtcNow;
+                        Log.Info($"LastUsed[player.ControlledCreature.UUID] == {LastUsed[player.ControlledCreature.UUID]}");
                     }
                 }
             };

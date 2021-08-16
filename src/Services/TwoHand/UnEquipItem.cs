@@ -1,5 +1,5 @@
-using NWN.API;
-using NWN.Services;
+using Anvil.API;
+using Anvil.Services;
 
 namespace Services.TwoHand
 {
@@ -12,7 +12,7 @@ namespace Services.TwoHand
             {
                 if (unequipItem.Item is NwItem && unequipItem.UnequippedBy is NwPlayer player)
                 {
-                    player.RemoveBuff();
+                    player.ControlledCreature.RemoveBuff();
                 }
             };
         }

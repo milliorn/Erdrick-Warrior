@@ -1,38 +1,38 @@
 using System;
-using NWN.API;
+using Anvil.API;
 using NWN.API.Constants;
 
 namespace Services.PlayerCharacter
 {
     public static class Extensions
     {
-        
+
         public static void PlayerHasStabilized(this NwPlayer pc)
         {
-            pc.PlayVoiceChat(VoiceChatType.GuardMe);
-            pc.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpHealingS));
-            pc.ApplyEffect(EffectDuration.Instant, Effect.Resurrection());
-            pc.SendServerMessage($"{pc.Name} has stabilized.");
+            pc.ControlledCreature.PlayVoiceChat(VoiceChatType.GuardMe);
+            pc.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpHealingS));
+            pc.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.Resurrection());
+            pc.SendServerMessage($"{pc.ControlledCreature.Name} has stabilized.");
         }
 
         public static void PlayerHasDied(this NwPlayer pc)
         {
-            pc.PlayVoiceChat(VoiceChatType.Death);
-            pc.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpDeath));
-            pc.ApplyEffect(EffectDuration.Instant, Effect.Death());
+            pc.ControlledCreature.PlayVoiceChat(VoiceChatType.Death);
+            pc.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpDeath));
+            pc.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.Death());
         }
 
         public static void ScreamOnDying(this NwPlayer pc)
         {
-            pc.ApplyEffect(EffectDuration.Instant, Effect.Damage(1));
+            pc.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.Damage(1));
             Random random = new();
             switch (random.Next(1, 6))
             {
-                case 1: pc.PlayVoiceChat(VoiceChatType.Cuss); break;
-                case 2: pc.PlayVoiceChat(VoiceChatType.NearDeath); break;
-                case 3: pc.PlayVoiceChat(VoiceChatType.Pain1); break;
-                case 4: pc.PlayVoiceChat(VoiceChatType.Pain2); break;
-                case 5: pc.PlayVoiceChat(VoiceChatType.Pain3); break;
+                case 1: pc.ControlledCreature.PlayVoiceChat(VoiceChatType.Cuss); break;
+                case 2: pc.ControlledCreature.PlayVoiceChat(VoiceChatType.NearDeath); break;
+                case 3: pc.ControlledCreature.PlayVoiceChat(VoiceChatType.Pain1); break;
+                case 4: pc.ControlledCreature.PlayVoiceChat(VoiceChatType.Pain2); break;
+                case 5: pc.ControlledCreature.PlayVoiceChat(VoiceChatType.Pain3); break;
             }
         }
     }

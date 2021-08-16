@@ -1,20 +1,21 @@
-using NWN.API;
-using NWN.Services;
+using Anvil.API;
+using Anvil.Services;
 
 namespace Services.TwoHand
 {
-    [ServiceBinding(typeof(EquipItem))]
-    public class EquipItem
-    {
-        public EquipItem()
-        {
-            NwModule.Instance.OnPlayerEquipItem += equipItem =>
-            {
-                if (equipItem.Item is NwItem && equipItem.Player is NwPlayer player && (!player.CheckCreatureSize() || !player.HasShieldEquipped() && !player.CheckCreaturekSizeAndWeapon()))
-                {
-                    player.AddBuff();
-                }
-            };
-        }
-    }
+	[ServiceBinding(typeof(EquipItem))]
+	public class EquipItem
+	{
+		public EquipItem()
+		{
+			NwModule.Instance.OnPlayerEquipItem += equipItem =>
+			{
+				if (equipItem.Item is NwItem && equipItem.Player is NwPlayer player && (!player.ControlledCreature.CheckCreatureSize() || 
+                    !player.ControlledCreature.HasShieldEquipped() && !player.ControlledCreature.CheckCreaturekSizeAndWeapon()))
+				{
+					player.ControlledCreature.AddBuff();
+				}
+			};
+		}
+	}
 }

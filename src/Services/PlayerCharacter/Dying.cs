@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 //using NLog;
-using NWN.API;
-using NWN.API.Events;
-using NWN.Services;
+using Anvil.API;
+using Anvil.API.Events;
+using Anvil.Services;
 
 namespace Services.PlayerCharacter
 {
@@ -20,7 +20,7 @@ namespace Services.PlayerCharacter
             }
             else
             {
-                dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Death(true));
+                dying.Player.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.Death(true));
             }
         };
 
@@ -33,10 +33,10 @@ namespace Services.PlayerCharacter
 
             dying.Player.ScreamOnDying();
 
-            int stabilize = new Random().Next(1, 10);
+            int stabilize = new Random(0).Next(1, 10);
             dying.Player.SendServerMessage($"Stabilize roll:{stabilize.ToString().ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
 
-            if (dying.Player.HP <= -127)
+            if (dying.Player.ControlledCreature.HP <= -127)
             {
                 dying.Player.PlayerHasDied();
                 return;

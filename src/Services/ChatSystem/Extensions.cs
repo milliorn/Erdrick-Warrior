@@ -4,9 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using NLog.Fluent;
-using NWN.API;
-using NWN.API.Constants;
-using NWN.API.Events;
+using Anvil.API;
+using Anvil.API.Events;
 
 namespace Services.ChatSystem
 {
@@ -15,7 +14,7 @@ namespace Services.ChatSystem
         private static readonly char playerWildcard = '!';
         private static readonly string notReady = "Feature not implemented.";
 
-        public static int SetPortrait(this NwPlayer player, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (player.PortraitId = n) : 0;
+        public static int SetPortrait(this NwPlayer player, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (player.ControlledCreature.PortraitId = n) : 0;
         public static string SetVoice(this ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (notReady) : chat.Message;
         public static bool TriggerChatTools(this ModuleEvents.OnPlayerChat chat) => chat.Message.StartsWith(playerWildcard);
 
@@ -34,7 +33,7 @@ namespace Services.ChatSystem
                 else
                 {
                     playerCount++;
-                    stringBuilder.Append($"{pc.Name.ColorString(Color.PINK)} | {pc.Area.Name}\n".ColorString(Color.WHITE));
+                    stringBuilder.Append($"{pc.ControlledCreature.ControlledCreature.Name.ColorString(Color.PINK)} | {pc.Area.ControlledCreature.Name}\n".ColorString(Color.WHITE));
                 }
             }
 
@@ -48,26 +47,26 @@ namespace Services.ChatSystem
 
         public static void SetArmBone(this NwPlayer player)
         {
-            player.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
-            player.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
-            player.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
+            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
+            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
+            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
         }
 
         public static void SetArmNormal(this NwPlayer player)
         {
-            player.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
-            player.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
-            player.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
+            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
+            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
+            player.ControlledCreature.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
         }
 
         public static CreatureTailType SetTail(this NwPlayer player, string[] chatArray)
         {
             return (chatArray[1]) switch
             {
-                "bone" => player.TailType = CreatureTailType.Bone,
-                "devil" => player.TailType = CreatureTailType.Devil,
-                "lizard" => player.TailType = CreatureTailType.Lizard,
-                _ => player.TailType = CreatureTailType.None,
+                "bone" => player.ControlledCreature.TailType = CreatureTailType.Bone,
+                "devil" => player.ControlledCreature.TailType = CreatureTailType.Devil,
+                "lizard" => player.ControlledCreature.TailType = CreatureTailType.Lizard,
+                _ => player.ControlledCreature.TailType = CreatureTailType.None,
             };
         }
 
@@ -75,13 +74,13 @@ namespace Services.ChatSystem
         {
             return (chatArray[1]) switch
             {
-                "angel" => player.WingType = CreatureWingType.Angel,
-                "bat" => player.WingType = CreatureWingType.Bat,
-                "bird" => player.WingType = CreatureWingType.Bird,
-                "butterfly" => player.WingType = CreatureWingType.Butterfly,
-                "demon" => player.WingType = CreatureWingType.Demon,
-                "dragon" => player.WingType = CreatureWingType.Dragon,
-                _ => player.WingType = CreatureWingType.None,
+                "angel" => player.ControlledCreature.WingType = CreatureWingType.Angel,
+                "bat" => player.ControlledCreature.WingType = CreatureWingType.Bat,
+                "bird" => player.ControlledCreature.WingType = CreatureWingType.Bird,
+                "butterfly" => player.ControlledCreature.WingType = CreatureWingType.Butterfly,
+                "demon" => player.ControlledCreature.WingType = CreatureWingType.Demon,
+                "dragon" => player.ControlledCreature.WingType = CreatureWingType.Dragon,
+                _ => player.ControlledCreature.WingType = CreatureWingType.None,
             };
         }
 
@@ -90,25 +89,25 @@ namespace Services.ChatSystem
             switch (chatArray[1])
             {
                 case "chaotic":
-                    player.LawChaosValue = 0;
+                    player.ControlledCreature.LawChaosValue = 0;
                     break;
                 case "evil":
-                    player.GoodEvilValue = 0;
+                    player.ControlledCreature.GoodEvilValue = 0;
                     break;
                 case "good":
-                    player.GoodEvilValue = 100;
+                    player.ControlledCreature.GoodEvilValue = 100;
                     break;
                 case "lawful":
-                    player.LawChaosValue = 100;
+                    player.ControlledCreature.LawChaosValue = 100;
                     break;
                 case "neutral":
                     if (chatArray[2].Equals("1"))
                     {
-                        player.LawChaosValue = 50; break;
+                        player.ControlledCreature.LawChaosValue = 50; break;
                     }
                     else if (chatArray[2].Equals("2"))
                     {
-                        player.GoodEvilValue = 50; break;
+                        player.ControlledCreature.GoodEvilValue = 50; break;
                     }
                     else
                     {
@@ -123,27 +122,27 @@ namespace Services.ChatSystem
 
         public static NwItem SetVisual(this NwPlayer player, string[] chatArray)
         {
-            if (player.GetItemInSlot(InventorySlot.RightHand).IsValid && player.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Any(x => x.PropertyType == ItemPropertyType.VisualEffect))
+            if (player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).IsValid && player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Any(x => x.PropertyType == ItemPropertyType.VisualEffect))
             {
-                foreach (NWN.API.ItemProperty property in player.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where<ItemProperty>(x => x.PropertyType == ItemPropertyType.VisualEffect))
+                foreach (NWN.API.ItemProperty property in player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where<ItemProperty>(x => x.PropertyType == ItemPropertyType.VisualEffect))
                 {
-                    player.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
+                    player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
                 }
             }
 
             switch (chatArray[1])
             {
-                case "acid": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
-                case "cold": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
-                case "electric": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
-                case "evil": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
-                case "fire": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
-                case "holy": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
-                case "sonic": player.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
+                case "acid": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
+                case "cold": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
+                case "electric": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
+                case "evil": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
+                case "fire": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
+                case "holy": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
+                case "sonic": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
                 default: break;
             }
 
-            return player.GetItemInSlot(InventorySlot.RightHand);
+            return player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand);
         }
 
         public static void SetEyes(this NwPlayer player, string[] chatArray)
@@ -151,82 +150,82 @@ namespace Services.ChatSystem
             VfxType eyes = VfxType.EyesCynTroglodyte;
             string color = chatArray[1];
 
-            switch (player.RacialType)
+            switch (player.ControlledCreature.RacialType)
             {
                 case RacialType.Dwarf:
                     switch (color)
                     {
-                        case "cyan": eyes = player.Gender == Gender.Female ? VfxType.EyesCynDwarfFemale : VfxType.EyesCynDwarfMale; break;
-                        case "green": eyes = player.Gender == Gender.Female ? VfxType.EyesGreenDwarfFemale : VfxType.EyesGreenDwarfMale; break;
-                        case "orange": eyes = player.Gender == Gender.Female ? VfxType.EyesOrgDwarfFemale : VfxType.EyesOrgDwarfMale; break;
-                        case "purple": eyes = player.Gender == Gender.Female ? VfxType.EyesPurDwarfFemale : VfxType.EyesPurDwarfMale; break;
-                        case "red": eyes = player.Gender == Gender.Female ? VfxType.EyesRedFlameDwarfFemale : VfxType.EyesRedFlameDwarfMale; break;
-                        case "white": eyes = player.Gender == Gender.Female ? VfxType.EyesWhtDwarfFemale : VfxType.EyesWhtDwarfMale; break;
-                        case "yellow": eyes = player.Gender == Gender.Female ? VfxType.EyesYelDwarfFemale : VfxType.EyesYelDwarfMale; break;
+                        case "cyan": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesCynDwarfFemale : VfxType.EyesCynDwarfMale; break;
+                        case "green": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesGreenDwarfFemale : VfxType.EyesGreenDwarfMale; break;
+                        case "orange": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesOrgDwarfFemale : VfxType.EyesOrgDwarfMale; break;
+                        case "purple": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesPurDwarfFemale : VfxType.EyesPurDwarfMale; break;
+                        case "red": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesRedFlameDwarfFemale : VfxType.EyesRedFlameDwarfMale; break;
+                        case "white": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesWhtDwarfFemale : VfxType.EyesWhtDwarfMale; break;
+                        case "yellow": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesYelDwarfFemale : VfxType.EyesYelDwarfMale; break;
                     }
                     break;
                 case RacialType.Elf:
                     switch (color)
                     {
-                        case "cyan": eyes = player.Gender == Gender.Female ? VfxType.EyesCynElfFemale : VfxType.EyesCynElfMale; break;
-                        case "green": eyes = player.Gender == Gender.Female ? VfxType.EyesGreenElfFemale : VfxType.EyesGreenElfMale; break;
-                        case "orange": eyes = player.Gender == Gender.Female ? VfxType.EyesOrgElfFemale : VfxType.EyesOrgElfMale; break;
-                        case "purple": eyes = player.Gender == Gender.Female ? VfxType.EyesPurElfFemale : VfxType.EyesPurElfMale; break;
-                        case "red": eyes = player.Gender == Gender.Female ? VfxType.EyesRedFlameElfFemale : VfxType.EyesRedFlameElfMale; break;
-                        case "white": eyes = player.Gender == Gender.Female ? VfxType.EyesWhtElfFemale : VfxType.EyesWhtHalflingMale; break;
-                        case "yellow": eyes = player.Gender == Gender.Female ? VfxType.EyesYelElfFemale : VfxType.EyesYelElfMale; break;
+                        case "cyan": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesCynElfFemale : VfxType.EyesCynElfMale; break;
+                        case "green": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesGreenElfFemale : VfxType.EyesGreenElfMale; break;
+                        case "orange": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesOrgElfFemale : VfxType.EyesOrgElfMale; break;
+                        case "purple": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesPurElfFemale : VfxType.EyesPurElfMale; break;
+                        case "red": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesRedFlameElfFemale : VfxType.EyesRedFlameElfMale; break;
+                        case "white": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesWhtElfFemale : VfxType.EyesWhtHalflingMale; break;
+                        case "yellow": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesYelElfFemale : VfxType.EyesYelElfMale; break;
                         default: break;
                     }
                     break;
                 case RacialType.Gnome:
                     switch (color)
                     {
-                        case "cyan": eyes = player.Gender == Gender.Female ? VfxType.EyesCynGnomeFemale : VfxType.EyesCynGnomeMale; break;
-                        case "green": eyes = player.Gender == Gender.Female ? VfxType.EyesGreenGnomeFemale : VfxType.EyesGreenGnomeMale; break;
-                        case "orange": eyes = player.Gender == Gender.Female ? VfxType.EyesOrgGnomeFemale : VfxType.EyesOrgGnomeMale; break;
-                        case "purple": eyes = player.Gender == Gender.Female ? VfxType.EyesPurGnomeFemale : VfxType.EyesPurGnomeMale; break;
-                        case "red": eyes = player.Gender == Gender.Female ? VfxType.EyesRedFlameGnomeFemale : VfxType.EyesRedFlameGnomeMale; break;
-                        case "white": eyes = player.Gender == Gender.Female ? VfxType.EyesWhtGnomeFemale : VfxType.EyesWhtGnomeMale; break;
-                        case "yellow": eyes = player.Gender == Gender.Female ? VfxType.EyesYelGnomeFemale : VfxType.EyesYelGnomeMale; break;
+                        case "cyan": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesCynGnomeFemale : VfxType.EyesCynGnomeMale; break;
+                        case "green": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesGreenGnomeFemale : VfxType.EyesGreenGnomeMale; break;
+                        case "orange": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesOrgGnomeFemale : VfxType.EyesOrgGnomeMale; break;
+                        case "purple": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesPurGnomeFemale : VfxType.EyesPurGnomeMale; break;
+                        case "red": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesRedFlameGnomeFemale : VfxType.EyesRedFlameGnomeMale; break;
+                        case "white": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesWhtGnomeFemale : VfxType.EyesWhtGnomeMale; break;
+                        case "yellow": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesYelGnomeFemale : VfxType.EyesYelGnomeMale; break;
                         default: break;
                     }
                     break;
                 case RacialType.Halfling:
                     switch (color)
                     {
-                        case "cyan": eyes = player.Gender == Gender.Female ? VfxType.EyesCynHalflingFemale : VfxType.EyesCynHalflingMale; ; break;
-                        case "green": eyes = player.Gender == Gender.Female ? VfxType.EyesGreenHalflingFemale : VfxType.EyesGreenHalflingMale; break;
-                        case "orange": eyes = player.Gender == Gender.Female ? VfxType.EyesOrgHalflingFemale : VfxType.EyesOrgHalflingMale; break;
-                        case "purple": eyes = player.Gender == Gender.Female ? VfxType.EyesPurHalflingFemale : VfxType.EyesPurHalflingMale; break;
-                        case "red": eyes = player.Gender == Gender.Female ? VfxType.EyesRedFlameHalflingFemale : VfxType.EyesRedFlameHalflingMale; break;
-                        case "white": eyes = player.Gender == Gender.Female ? VfxType.EyesWhtHalflingFemale : VfxType.EyesWhtHalflingMale; break;
-                        case "yellow": eyes = player.Gender == Gender.Female ? VfxType.EyesYelHalflingFemale : VfxType.EyesYelHalflingMale; break;
+                        case "cyan": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesCynHalflingFemale : VfxType.EyesCynHalflingMale; ; break;
+                        case "green": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesGreenHalflingFemale : VfxType.EyesGreenHalflingMale; break;
+                        case "orange": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesOrgHalflingFemale : VfxType.EyesOrgHalflingMale; break;
+                        case "purple": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesPurHalflingFemale : VfxType.EyesPurHalflingMale; break;
+                        case "red": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesRedFlameHalflingFemale : VfxType.EyesRedFlameHalflingMale; break;
+                        case "white": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesWhtHalflingFemale : VfxType.EyesWhtHalflingMale; break;
+                        case "yellow": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesYelHalflingFemale : VfxType.EyesYelHalflingMale; break;
                         default: break;
                     }
                     break;
                 case RacialType.HalfOrc:
                     switch (color)
                     {
-                        case "cyan": eyes = player.Gender == Gender.Female ? VfxType.EyesCynHalforcFemale : VfxType.EyesCynHalforcMale; break;
-                        case "green": eyes = player.Gender == Gender.Female ? VfxType.EyesGreenHalforcFemale : VfxType.EyesGreenHalforcMale; break;
-                        case "orange": eyes = player.Gender == Gender.Female ? VfxType.EyesOrgHalforcFemale : VfxType.EyesOrgHalforcMale; break;
-                        case "purple": eyes = player.Gender == Gender.Female ? VfxType.EyesPurHalforcFemale : VfxType.EyesPurHalforcMale; break;
-                        case "red": eyes = player.Gender == Gender.Female ? VfxType.EyesRedFlameHalforcFemale : VfxType.EyesRedFlameHalforcMale; break;
-                        case "white": eyes = player.Gender == Gender.Female ? VfxType.EyesWhtHalforcFemale : VfxType.EyesWhtHalforcMale; break;
-                        case "yellow": eyes = player.Gender == Gender.Female ? VfxType.EyesYelHalforcFemale : VfxType.EyesYelHalforcMale; break;
+                        case "cyan": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesCynHalforcFemale : VfxType.EyesCynHalforcMale; break;
+                        case "green": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesGreenHalforcFemale : VfxType.EyesGreenHalforcMale; break;
+                        case "orange": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesOrgHalforcFemale : VfxType.EyesOrgHalforcMale; break;
+                        case "purple": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesPurHalforcFemale : VfxType.EyesPurHalforcMale; break;
+                        case "red": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesRedFlameHalforcFemale : VfxType.EyesRedFlameHalforcMale; break;
+                        case "white": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesWhtHalforcFemale : VfxType.EyesWhtHalforcMale; break;
+                        case "yellow": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesYelHalforcFemale : VfxType.EyesYelHalforcMale; break;
                         default: break;
                     }
                     break;
                 case RacialType.Human:
                     switch (color)
                     {
-                        case "cyan": eyes = player.Gender == Gender.Female ? VfxType.EyesCynHumanFemale : VfxType.EyesCynHumanMale; break;
-                        case "green": eyes = player.Gender == Gender.Female ? VfxType.EyesGreenHumanFemale : VfxType.EyesGreenHumanMale; break;
-                        case "orange": eyes = player.Gender == Gender.Female ? VfxType.EyesOrgHumanFemale : VfxType.EyesOrgHumanMale; break;
-                        case "purple": eyes = player.Gender == Gender.Female ? VfxType.EyesPurHumanFemale : VfxType.EyesPurHumanMale; break;
-                        case "red": eyes = player.Gender == Gender.Female ? VfxType.EyesRedFlameHumanFemale : VfxType.EyesRedFlameHumanMale; break;
-                        case "white": eyes = player.Gender == Gender.Female ? VfxType.EyesWhtHumanFemale : VfxType.EyesWhtHumanMale; break;
-                        case "yellow": eyes = player.Gender == Gender.Female ? VfxType.EyesYelHumanFemale : VfxType.EyesYelHumanMale; break;
+                        case "cyan": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesCynHumanFemale : VfxType.EyesCynHumanMale; break;
+                        case "green": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesGreenHumanFemale : VfxType.EyesGreenHumanMale; break;
+                        case "orange": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesOrgHumanFemale : VfxType.EyesOrgHumanMale; break;
+                        case "purple": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesPurHumanFemale : VfxType.EyesPurHumanMale; break;
+                        case "red": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesRedFlameHumanFemale : VfxType.EyesRedFlameHumanMale; break;
+                        case "white": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesWhtHumanFemale : VfxType.EyesWhtHumanMale; break;
+                        case "yellow": eyes = player.ControlledCreature.Gender == Gender.Female ? VfxType.EyesYelHumanFemale : VfxType.EyesYelHumanMale; break;
                         default: break;
                     }
                     break;
@@ -245,7 +244,7 @@ namespace Services.ChatSystem
                     break;
             }
 
-            player.ApplyEffect(EffectDuration.Permanent, NWN.API.Effect.VisualEffect(eyes));
+            player.ControlledCreature.ApplyEffect(EffectDuration.Permanent, NWN.API.Effect.VisualEffect(eyes));
         }
 
         public static void Emote(this NwPlayer player, string[] chatArray)
@@ -254,44 +253,44 @@ namespace Services.ChatSystem
             {
                 switch (chatArray[1])
                 {
-                    case "bow": player.PlayAnimation(Animation.FireForgetBow, animSpeed); break;
-                    case "duck": player.PlayAnimation(Animation.FireForgetDodgeDuck, animSpeed); break;
-                    case "dodge": player.PlayAnimation(Animation.FireForgetDodgeDuck, animSpeed); break;
-                    case "drink": player.PlayAnimation(Animation.FireForgetDrink, animSpeed); break;
-                    case "greet": player.PlayAnimation(Animation.FireForgetGreeting, animSpeed); break;
-                    case "left": player.PlayAnimation(Animation.FireForgetHeadTurnLeft, animSpeed); break;
-                    case "right": player.PlayAnimation(Animation.FireForgetHeadTurnRight, animSpeed); break;
-                    case "bored": player.PlayAnimation(Animation.FireForgetPauseBored, animSpeed); break;
-                    case "scratch": player.PlayAnimation(Animation.FireForgetPauseScratchHead, animSpeed); break;
-                    case "read": player.PlayAnimation(Animation.FireForgetRead, animSpeed); break;
-                    case "saulte": player.PlayAnimation(Animation.FireForgetSalute, animSpeed); break;
-                    case "spasm": player.PlayAnimation(Animation.FireForgetSpasm, animSpeed); break;
-                    case "steal": player.PlayAnimation(Animation.FireForgetSteal, animSpeed); break;
-                    case "taunt": player.PlayAnimation(Animation.FireForgetTaunt, animSpeed); break;
-                    case "v1": player.PlayAnimation(Animation.FireForgetVictory1, animSpeed); break;
-                    case "v2": player.PlayAnimation(Animation.FireForgetVictory2, animSpeed); break;
-                    case "v3": player.PlayAnimation(Animation.FireForgetVictory3, animSpeed); break;
-                    case "c1": player.PlayAnimation(Animation.LoopingConjure1, animSpeed); break;
-                    case "c2": player.PlayAnimation(Animation.LoopingConjure2, animSpeed); break;
-                    case "back": player.PlayAnimation(Animation.LoopingDeadBack, animSpeed); break;
-                    case "front": player.PlayAnimation(Animation.LoopingDeadFront, animSpeed); break;
-                    case "low": player.PlayAnimation(Animation.LoopingGetLow, animSpeed); break;
-                    case "mid": player.PlayAnimation(Animation.LoopingGetMid, animSpeed); break;
-                    case "listen": player.PlayAnimation(Animation.LoopingListen, animSpeed); break;
-                    case "look": player.PlayAnimation(Animation.LoopingLookFar, animSpeed); break;
-                    case "meditate": player.PlayAnimation(Animation.LoopingMeditate, animSpeed); break;
-                    case "p1": player.PlayAnimation(Animation.FireForgetPauseBored, animSpeed); break;
-                    case "p2": player.PlayAnimation(Animation.FireForgetPauseScratchHead, animSpeed); break;
-                    case "drunk": player.PlayAnimation(Animation.LoopingPauseDrunk, animSpeed); break;
-                    case "tired": player.PlayAnimation(Animation.LoopingPauseTired, animSpeed); break;
-                    case "squat": player.PlayAnimation(Animation.LoopingSitChair, animSpeed); break;
-                    case "sit": player.PlayAnimation(Animation.LoopingSitCross, animSpeed); break;
-                    case "spasming": player.PlayAnimation(Animation.LoopingSpasm, animSpeed); break;
-                    case "forceful": player.PlayAnimation(Animation.LoopingTalkForceful, animSpeed); break;
-                    case "lol": player.PlayAnimation(Animation.LoopingTalkLaughing, animSpeed); break;
-                    case "normal": player.PlayAnimation(Animation.LoopingTalkNormal, animSpeed); break;
-                    case "beg": player.PlayAnimation(Animation.LoopingTalkPleading, animSpeed); break;
-                    case "worship": player.PlayAnimation(Animation.LoopingWorship, animSpeed); break;
+                    case "bow": player.ControlledCreature.PlayAnimation(Animation.FireForgetBow, animSpeed); break;
+                    case "duck": player.ControlledCreature.PlayAnimation(Animation.FireForgetDodgeDuck, animSpeed); break;
+                    case "dodge": player.ControlledCreature.PlayAnimation(Animation.FireForgetDodgeDuck, animSpeed); break;
+                    case "drink": player.ControlledCreature.PlayAnimation(Animation.FireForgetDrink, animSpeed); break;
+                    case "greet": player.ControlledCreature.PlayAnimation(Animation.FireForgetGreeting, animSpeed); break;
+                    case "left": player.ControlledCreature.PlayAnimation(Animation.FireForgetHeadTurnLeft, animSpeed); break;
+                    case "right": player.ControlledCreature.PlayAnimation(Animation.FireForgetHeadTurnRight, animSpeed); break;
+                    case "bored": player.ControlledCreature.PlayAnimation(Animation.FireForgetPauseBored, animSpeed); break;
+                    case "scratch": player.ControlledCreature.PlayAnimation(Animation.FireForgetPauseScratchHead, animSpeed); break;
+                    case "read": player.ControlledCreature.PlayAnimation(Animation.FireForgetRead, animSpeed); break;
+                    case "salute": player.ControlledCreature.PlayAnimation(Animation.FireForgetSalute, animSpeed); break;
+                    case "spasm": player.ControlledCreature.PlayAnimation(Animation.FireForgetSpasm, animSpeed); break;
+                    case "steal": player.ControlledCreature.PlayAnimation(Animation.FireForgetSteal, animSpeed); break;
+                    case "taunt": player.ControlledCreature.PlayAnimation(Animation.FireForgetTaunt, animSpeed); break;
+                    case "v1": player.ControlledCreature.PlayAnimation(Animation.FireForgetVictory1, animSpeed); break;
+                    case "v2": player.ControlledCreature.PlayAnimation(Animation.FireForgetVictory2, animSpeed); break;
+                    case "v3": player.ControlledCreature.PlayAnimation(Animation.FireForgetVictory3, animSpeed); break;
+                    case "c1": player.ControlledCreature.PlayAnimation(Animation.LoopingConjure1, animSpeed); break;
+                    case "c2": player.ControlledCreature.PlayAnimation(Animation.LoopingConjure2, animSpeed); break;
+                    case "back": player.ControlledCreature.PlayAnimation(Animation.LoopingDeadBack, animSpeed); break;
+                    case "front": player.ControlledCreature.PlayAnimation(Animation.LoopingDeadFront, animSpeed); break;
+                    case "low": player.ControlledCreature.PlayAnimation(Animation.LoopingGetLow, animSpeed); break;
+                    case "mid": player.ControlledCreature.PlayAnimation(Animation.LoopingGetMid, animSpeed); break;
+                    case "listen": player.ControlledCreature.PlayAnimation(Animation.LoopingListen, animSpeed); break;
+                    case "look": player.ControlledCreature.PlayAnimation(Animation.LoopingLookFar, animSpeed); break;
+                    case "meditate": player.ControlledCreature.PlayAnimation(Animation.LoopingMeditate, animSpeed); break;
+                    case "p1": player.ControlledCreature.PlayAnimation(Animation.FireForgetPauseBored, animSpeed); break;
+                    case "p2": player.ControlledCreature.PlayAnimation(Animation.FireForgetPauseScratchHead, animSpeed); break;
+                    case "drunk": player.ControlledCreature.PlayAnimation(Animation.LoopingPauseDrunk, animSpeed); break;
+                    case "tired": player.ControlledCreature.PlayAnimation(Animation.LoopingPauseTired, animSpeed); break;
+                    case "squat": player.ControlledCreature.PlayAnimation(Animation.LoopingSitChair, animSpeed); break;
+                    case "sit": player.ControlledCreature.PlayAnimation(Animation.LoopingSitCross, animSpeed); break;
+                    case "spasming": player.ControlledCreature.PlayAnimation(Animation.LoopingSpasm, animSpeed); break;
+                    case "forceful": player.ControlledCreature.PlayAnimation(Animation.LoopingTalkForceful, animSpeed); break;
+                    case "lol": player.ControlledCreature.PlayAnimation(Animation.LoopingTalkLaughing, animSpeed); break;
+                    case "normal": player.ControlledCreature.PlayAnimation(Animation.LoopingTalkNormal, animSpeed); break;
+                    case "beg": player.ControlledCreature.PlayAnimation(Animation.LoopingTalkPleading, animSpeed); break;
+                    case "worship": player.ControlledCreature.PlayAnimation(Animation.LoopingWorship, animSpeed); break;
                     default: break;
                 }
             }
@@ -299,25 +298,25 @@ namespace Services.ChatSystem
 
         public static int ResetLevel(this NwPlayer player, string[] chatArray)
         {
-            int xp = player.Xp;
+            int xp = player.ControlledCreature.Xp;
 
             if (chatArray[1].Equals("one"))
             {
-                int hd = player.Level;
-                player.Xp = (hd * (hd - 1) / 2 * 1000) - 1;
+                int hd = player.ControlledCreature.Level;
+                player.ControlledCreature.Xp = (hd * (hd - 1) / 2 * 1000) - 1;
             }
             else if (chatArray[1].Equals("all"))
             {
-                player.Xp = 0;
+                player.ControlledCreature.Xp = 0;
             }
             else
             {
 
             }
 
-            player.SendServerMessage($"{player.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
+            player.SendServerMessage($"{player.ControlledCreature.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
             player.ExportCharacter();
-            return player.Xp = xp;
+            return player.ControlledCreature.Xp = xp;
         }
 
         public static void SetStatus(this NwPlayer player, string[] chatArray)
@@ -364,7 +363,7 @@ namespace Services.ChatSystem
         {
             if (int.TryParse(chatArray[1], out int n))
             {
-                player.SetColor(ColorChannel.Skin, n);
+                player.ControlledCreature.SetColor(ColorChannel.Skin, n);
             }
         }
 
@@ -372,7 +371,7 @@ namespace Services.ChatSystem
         {
             if (int.TryParse(chatArray[1], out int n))
             {
-                player.SetColor(ColorChannel.Hair, n);
+                player.ControlledCreature.SetColor(ColorChannel.Hair, n);
             }
         }
 
@@ -380,7 +379,7 @@ namespace Services.ChatSystem
         {
             if (int.TryParse(chatArray[1], out int n))
             {
-                player.SetColor(ColorChannel.Tattoo1, n);
+                player.ControlledCreature.SetColor(ColorChannel.Tattoo1, n);
             }
         }
 
@@ -388,7 +387,7 @@ namespace Services.ChatSystem
         {
             if (int.TryParse(chatArray[1], out int n))
             {
-                player.SetColor(ColorChannel.Tattoo2, n);
+                player.ControlledCreature.SetColor(ColorChannel.Tattoo2, n);
             }
         }
 
@@ -396,7 +395,7 @@ namespace Services.ChatSystem
         {
             if (int.TryParse(chatArray[1], out int n))
             {
-                player.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
+                player.ControlledCreature.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
             }
         }
     }

@@ -1,6 +1,6 @@
 using NLog;
-using NWN.API;
-using NWN.Services;
+using Anvil.API;
+using Anvil.Services;
 
 namespace Services.Client
 {
@@ -11,7 +11,7 @@ namespace Services.Client
 
         public Enter() => NwModule.Instance.OnClientEnter += enter =>
         {
-            if (enter.Player.ClientCheckName(enter.Player.Name)) return;
+            if (enter.Player.ClientCheckName(enter.Player.ControlledCreature.Name)) return;
 
             if (enter.Player.IsDM)
             {

@@ -1,9 +1,9 @@
 using System.Linq;
 using NLog;
-using NWN.API;
+using Anvil.API;
 using NWN.API.Constants;
-using NWN.API.Events;
-using NWN.Services;
+using Anvil.API.Events;
+using Anvil.Services;
 
 namespace Services.LootSplitter
 {
@@ -41,19 +41,19 @@ namespace Services.LootSplitter
             }
             else if (obj.DisturbedItem.HasInventory)
             {
-                pc.FloatingTextString($"{pc.Name} cannot sell inventory items {pc.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
+                pc.FloatingTextString($"{pc.ControlledCreature.Name} cannot sell inventory items {pc.ControlledCreature.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
                 CloneDestroy(obj, pc);
 
             }
             else if (obj.DisturbedItem.PlotFlag)
             {
-                pc.FloatingTextString($"{pc.Name} cannot sell plot items {pc.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
+                pc.FloatingTextString($"{pc.ControlledCreature.Name} cannot sell plot items {pc.ControlledCreature.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
                 CloneDestroy(obj, pc);
             }
             else
             {
                 int itemValue = obj.DisturbedItem.GoldValue / 10 > 0 ? obj.DisturbedItem.GoldValue / 10 : 1;
-                pc.FloatingTextString($"{pc.Name} sold {pc.Name.ColorString(Color.WHITE)} for {itemValue}!".ColorString(Color.GREEN));
+                pc.FloatingTextString($"{pc.ControlledCreature.Name} sold {pc.ControlledCreature.Name.ColorString(Color.WHITE)} for {itemValue}!".ColorString(Color.GREEN));
                 GiveGoldEqually(pc, itemValue);
             }
         }
@@ -63,12 +63,12 @@ namespace Services.LootSplitter
             int goldDivided = itemValue / pc.PartyMembers.Count<NwPlayer>();
 
             if (pc.PartyMembers.Count() == 1) return;
-            
-            pc.FloatingTextString($"{goldDivided.ToString().ColorString(Color.WHITE)}gp given to each player after splitting {itemValue.ToString().ColorString(Color.WHITE)} from {pc.Name.ColorString(Color.WHITE)}.");
+
+            pc.FloatingTextString($"{goldDivided.ToString().ColorString(Color.WHITE)}gp given to each player after splitting {itemValue.ToString().ColorString(Color.WHITE)} from {pc.ControlledCreature.Name.ColorString(Color.WHITE)}.");
             foreach (NwPlayer player in pc.PartyMembers)
             {
-                logger.Info(pc.Name);
-                player.GiveGold(goldDivided, true);
+                logger.Info(pc.ControlledCreature.Name);
+                player.ControlledCreature.GiveGold(goldDivided, true);
             }
         }
 

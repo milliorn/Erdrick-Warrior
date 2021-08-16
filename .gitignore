@@ -370,3 +370,4 @@ server/
 # Jetbrains
 .idea/
 Eldritch_Warrior.mod
+.vscode/

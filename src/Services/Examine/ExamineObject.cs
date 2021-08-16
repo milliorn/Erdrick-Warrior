@@ -1,6 +1,6 @@
-using NWN.API;
+using Anvil.API;
 using NWN.API.Constants;
-using NWN.Services;
+using Anvil.Services;
 
 namespace Services.Examine
 {
@@ -11,7 +11,7 @@ namespace Services.Examine
         {
             var examinedBy = Examine.ExaminedBy;
 
-            if (Examine.ExaminedObject is NwCreature creature && examinedBy.IsReactionTypeHostile(creature) && examinedBy.GetSkillRank(Skill.Lore) > creature.Level)
+            if (Examine.ExaminedObject is NwCreature creature && examinedBy.ControlledCreature.IsReactionTypeHostile(creature) && examinedBy.ControlledCreature.GetSkillRank(Skill.Lore) > creature.Level)
             {
                 creature.Description = PrintCRValue(creature);
             }

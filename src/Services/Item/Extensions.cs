@@ -1,5 +1,5 @@
 using System.Linq;
-using NWN.API;
+using Anvil.API;
 
 namespace Services.Item
 {
@@ -23,7 +23,7 @@ namespace Services.Item
 
         public static void SendMessageToAllPartyWithinDistance(this NwPlayer nwPlayer, string message, float distance)
         {
-            foreach (NwPlayer member in nwPlayer.PartyMembers.Where(member => member.Distance(nwPlayer) == distance))
+            foreach (NwPlayer member in nwPlayer.PartyMembers.Where(member => member.ControlledCreature.Distance(nwPlayer) == distance))
             {
                 member.SendServerMessage(message);
             }
