@@ -1,21 +1,8 @@
 version: 2
 updates:
-  - package-ecosystem: "docker"
-    directory: "core"
+  - package-ecosystem: "nuget"
+    directory: "/"
     schedule:
       interval: "daily"
-
-  - package-ecosystem: nuget
-    directory: "core"
-    schedule:
-      interval: daily
-
-  - package-ecosystem: "docker"
-    directory: "anvil"
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: nuget
-    directory: "anvil"
-    schedule:
-      interval: daily
+    labels:
+      - "Package Update"
