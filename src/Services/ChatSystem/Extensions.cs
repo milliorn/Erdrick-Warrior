@@ -34,7 +34,7 @@ namespace Services.ChatSystem
                 else
                 {
                     playerCount++;
-                    stringBuilder.Append($"{pc.ControlledCreature.Name.ColorString(Color.PINK)} | {pc.Area.ControlledCreature.Name}\n".ColorString(Color.WHITE));
+                    stringBuilder.Append($"{pc.ControlledCreature.Name.ColorString(Color.PINK)} | {pc.Area.Name}\n".ColorString(Color.WHITE));
                 }
             }
 
@@ -48,16 +48,16 @@ namespace Services.ChatSystem
 
         public static void SetArmBone(this NwPlayer player)
         {
-            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
-            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
-            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelNumber.Undead);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelNumber.Undead);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelNumber.Undead);
         }
 
         public static void SetArmNormal(this NwPlayer player)
         {
-            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
-            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
-            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelNumber.Skin);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelNumber.Skin);
+            player.ControlledCreature.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelNumber.Skin);
         }
 
         public static CreatureTailType SetTail(this NwPlayer player, string[] chatArray)
@@ -125,7 +125,7 @@ namespace Services.ChatSystem
         {
             if (player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).IsValid && player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Any(x => x.PropertyType == ItemPropertyType.VisualEffect))
             {
-                foreach (NWN.API.ItemProperty property in player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where<ItemProperty>(x => x.PropertyType == ItemPropertyType.VisualEffect))
+                foreach (ItemProperty property in player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where<ItemProperty>(x => x.PropertyType == ItemPropertyType.VisualEffect))
                 {
                     player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
                 }
@@ -133,13 +133,13 @@ namespace Services.ChatSystem
 
             switch (chatArray[1])
             {
-                case "acid": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
-                case "cold": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
-                case "electric": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
-                case "evil": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
-                case "fire": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
-                case "holy": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
-                case "sonic": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
+                case "acid": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
+                case "cold": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
+                case "electric": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
+                case "evil": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
+                case "fire": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
+                case "holy": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
+                case "sonic": player.ControlledCreature.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
                 default: break;
             }
 
@@ -245,7 +245,7 @@ namespace Services.ChatSystem
                     break;
             }
 
-            player.ControlledCreature.ApplyEffect(EffectDuration.Permanent, NWN.API.Effect.VisualEffect(eyes));
+            player.ControlledCreature.ApplyEffect(EffectDuration.Permanent, Effect.VisualEffect(eyes));
         }
 
         public static void Emote(this NwPlayer player, string[] chatArray)
@@ -396,7 +396,7 @@ namespace Services.ChatSystem
         {
             if (int.TryParse(chatArray[1], out int n))
             {
-                player.ControlledCreature.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
+                player.ControlledCreature.SetCreatureBodyPart(CreaturePart.Head, n);
             }
         }
     }

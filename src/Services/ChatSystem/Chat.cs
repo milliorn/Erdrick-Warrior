@@ -33,7 +33,7 @@ namespace Services.ChatSystem
                     chat.Sender.ControlledCreature.HP = chat.Sender.ControlledCreature.HP = chat.Sender.ControlledCreature.MaxHP;
                     break;
                 case "dead":
-                    chat.Sender.ControlledCreature.ApplyEffect(EffectDuration.Instant, NWN.API.Effect.Damage(1));
+                    chat.Sender.ControlledCreature.ApplyEffect(EffectDuration.Instant, Effect.Damage(1));
                     break;
                 case "roster":
                     chat.Sender.Roster();

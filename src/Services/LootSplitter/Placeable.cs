@@ -32,29 +32,29 @@ namespace Services.LootSplitter
 
         private static void DestroyItemForGold(PlaceableEvents.OnDisturbed obj)
         {
-            var pc = (NwPlayer)obj.Disturber;
+            var pc = obj.Disturber;
 
             if (obj.DisturbedItem.BaseItemType == BaseItemType.Gold)
             {
-                GiveGoldEqually(pc, obj.DisturbedItem.StackSize);
-                CloneDestroy(obj, pc);
+                GiveGoldEqually(pc.ControllingPlayer, obj.DisturbedItem.StackSize);
+                CloneDestroy(obj, pc.ControllingPlayer);
             }
             else if (obj.DisturbedItem.HasInventory)
             {
-                pc.FloatingTextString($"{pc.ControlledCreature.Name} cannot sell inventory items {pc.ControlledCreature.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
-                CloneDestroy(obj, pc);
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell inventory items {pc.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
+                CloneDestroy(obj, pc.ControllingPlayer);
 
             }
             else if (obj.DisturbedItem.PlotFlag)
             {
-                pc.FloatingTextString($"{pc.ControlledCreature.Name} cannot sell plot items {pc.ControlledCreature.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
-                CloneDestroy(obj, pc);
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell plot items {pc.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
+                CloneDestroy(obj, pc.ControllingPlayer);
             }
             else
             {
                 int itemValue = obj.DisturbedItem.GoldValue / 10 > 0 ? obj.DisturbedItem.GoldValue / 10 : 1;
-                pc.FloatingTextString($"{pc.ControlledCreature.Name} sold {pc.ControlledCreature.Name.ColorString(Color.WHITE)} for {itemValue}!".ColorString(Color.GREEN));
-                GiveGoldEqually(pc, itemValue);
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} sold {pc.Name.ColorString(Color.WHITE)} for {itemValue}!".ColorString(Color.GREEN));
+                GiveGoldEqually(pc.ControllingPlayer, itemValue);
             }
         }
 

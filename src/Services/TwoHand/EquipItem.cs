@@ -10,7 +10,7 @@ namespace Services.TwoHand
 		{
 			NwModule.Instance.OnPlayerEquipItem += equipItem =>
 			{
-				if (equipItem.Item is NwItem && equipItem.Player is NwPlayer player && (!player.ControlledCreature.CheckCreatureSize() || 
+				if (equipItem.Item is NwItem && equipItem.Player.ControllingPlayer is NwPlayer player && (!player.ControlledCreature.CheckCreatureSize() || 
                     !player.ControlledCreature.HasShieldEquipped() && !player.ControlledCreature.CheckCreaturekSizeAndWeapon()))
 				{
 					player.ControlledCreature.AddBuff();

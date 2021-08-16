@@ -11,7 +11,7 @@ namespace Services.Item
         {
             NwModule.Instance.OnPlayerUnequipItem += unEquip =>
             {
-                if (unEquip.UnequippedBy is NwPlayer)
+                if (unEquip.UnequippedBy.IsPlayerControlled)
                 {
                     unEquip.Item.PrintGPValueOnItem();
                 }

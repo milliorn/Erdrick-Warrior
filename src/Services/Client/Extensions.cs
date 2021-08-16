@@ -12,18 +12,18 @@ namespace Services.Client
         /* Auto-Kill if we logout while in combat state */
         public static int DeathLog(this NwPlayer leave) => leave.ControlledCreature.IsInCombat ? leave.ControlledCreature.HP = -1 : leave.ControlledCreature.HP;
         public static string StripDashes(string uuid) => uuid = uuid.Replace("-", "");
-        public static void StoreHitPoints(this NwPlayer player) => player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", StripDashes(player.ControlledCreature.UUID.ToUUIDString())).Value = player.ControlledCreature.HP;
+        public static void StoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.ControlledCreature.UUID.ToUUIDString())).Value = player.ControlledCreature.HP;
         public static void RestoreHitPoints(this NwPlayer player)
         {
             var id = player.ControlledCreature.UUID.ToUUIDString();
 
-            if (player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", id) == null)
+            if (player.GetCampaignVariable<int>("Hit_Points", id) == null)
             {
-                player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
+                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
             }
             else
             {
-                player.ControlledCreature.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
+                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
             }
         }
 

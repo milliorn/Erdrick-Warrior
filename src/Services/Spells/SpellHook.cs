@@ -14,7 +14,7 @@ namespace Services.Spells
         {
             SpellEvents.OnSpellCast spellCast = new SpellEvents.OnSpellCast();
 
-            if (spellCast.Caster is NwPlayer player)
+            if (spellCast.Caster.IsPlayerControlled(out NwPlayer player))
             {
                 Spell spell = spellCast.Spell;
 

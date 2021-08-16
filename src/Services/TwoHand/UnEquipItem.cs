@@ -10,7 +10,7 @@ namespace Services.TwoHand
         {
             NwModule.Instance.OnPlayerUnequipItem += unequipItem =>
             {
-                if (unequipItem.Item is NwItem && unequipItem.UnequippedBy is NwPlayer player)
+                if (unequipItem.Item is NwItem && unequipItem.UnequippedBy.ControllingPlayer is NwPlayer player)
                 {
                     player.ControlledCreature.RemoveBuff();
                 }

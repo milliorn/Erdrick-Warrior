@@ -15,7 +15,7 @@ namespace Services.Item
 
         public static void RemoveAllTemporaryItemProperties(this NwItem nwItem)
         {
-            foreach (NWN.API.ItemProperty property in nwItem.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
+            foreach (ItemProperty property in nwItem.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
             {
                 nwItem.RemoveItemProperty(property);
             }

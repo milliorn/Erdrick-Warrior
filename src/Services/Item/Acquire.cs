@@ -22,9 +22,12 @@ namespace Services.Item
                 }
 
                 /* This is to short circuit the rest of this code if we are DM */
-                if (acquireItem.AcquiredBy is NwPlayer { IsDM: true }) return;
+                if (acquireItem.AcquiredBy.IsPlayerControlled(out NwPlayer player))
+                {
+                    if (player.IsDM) return;
+                }
 
-                if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
+                if (acquireItem.AcquiredBy.IsPlayerControlled(out NwPlayer playerA) && acquireItem.AcquiredBy.IsPlayerControlled(out NwPlayer playerB))
                 {
                     playerA.FixBarterExploit(playerB);
                 }

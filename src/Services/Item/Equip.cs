@@ -11,7 +11,7 @@ namespace Services.Item
         {
             NwModule.Instance.OnPlayerEquipItem += equip =>
             {
-                if (equip.Player is NwPlayer nwPlayer)
+                if (equip.Player.ControllingPlayer is NwPlayer nwPlayer)
                 {
                     equip.Item.PrintGPValueOnItem();
                     Module.Extensions.SaveCharacter(nwPlayer);

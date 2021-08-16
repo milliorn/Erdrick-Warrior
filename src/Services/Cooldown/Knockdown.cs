@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Anvil.API;
-using Anvil.API.Constants;
 using Anvil.Services;
 using NLog;
 
@@ -25,7 +24,7 @@ namespace Services.Cooldown
                 DateTime now = DateTime.UtcNow;
                 Log.Info($"now == {now}");
 
-                if (onFeatUse.Feat == Feat.Knockdown && onFeatUse.Creature is NwPlayer player)
+                if (onFeatUse.Feat == Feat.Knockdown && onFeatUse.Creature.ControllingPlayer is NwPlayer player)
                 {
                     Log.Info($"onFeatUse.Feat == {onFeatUse.Feat}");
 
