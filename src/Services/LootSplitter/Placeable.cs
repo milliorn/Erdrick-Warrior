@@ -41,19 +41,19 @@ namespace Services.LootSplitter
             }
             else if (obj.DisturbedItem.HasInventory)
             {
-                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell inventory items {pc.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell inventory items {pc.Name.ColorString(services.Rgb.White)}!".ColorString(services.Rgb.Orange));
                 CloneDestroy(obj, pc.ControllingPlayer);
 
             }
             else if (obj.DisturbedItem.PlotFlag)
             {
-                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell plot items {pc.Name.ColorString(Color.WHITE)}!".ColorString(Color.ORANGE));
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell plot items {pc.Name.ColorString(services.Rgb.White)}!".ColorString(services.Rgb.Orange));
                 CloneDestroy(obj, pc.ControllingPlayer);
             }
             else
             {
                 int itemValue = obj.DisturbedItem.GoldValue / 10 > 0 ? obj.DisturbedItem.GoldValue / 10 : 1;
-                pc.ControllingPlayer.FloatingTextString($"{pc.Name} sold {pc.Name.ColorString(Color.WHITE)} for {itemValue}!".ColorString(Color.GREEN));
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} sold {pc.Name.ColorString(services.Rgb.White)} for {itemValue}!".ColorString(services.Rgb.Green));
                 GiveGoldEqually(pc.ControllingPlayer, itemValue);
             }
         }
@@ -64,7 +64,7 @@ namespace Services.LootSplitter
 
             if (pc.PartyMembers.Count() == 1) return;
 
-            pc.FloatingTextString($"{goldDivided.ToString().ColorString(Color.WHITE)}gp given to each player after splitting {itemValue.ToString().ColorString(Color.WHITE)} from {pc.ControlledCreature.Name.ColorString(Color.WHITE)}.");
+            pc.FloatingTextString($"{goldDivided.ToString().ColorString(services.Rgb.White)}gp given to each player after splitting {itemValue.ToString().ColorString(services.Rgb.White)} from {pc.ControlledCreature.Name.ColorString(services.Rgb.White)}.");
             foreach (NwPlayer player in pc.PartyMembers)
             {
                 logger.Info(pc.ControlledCreature.Name);

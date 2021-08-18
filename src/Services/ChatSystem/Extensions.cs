@@ -23,7 +23,7 @@ namespace Services.ChatSystem
         {
             int playerCount = 0;
             int dmCount = 0;
-            StringBuilder stringBuilder = new("Players Online.\n".ColorString(Color.PINK));
+            StringBuilder stringBuilder = new("Players Online.\n".ColorString(services.Rgb.Fuchsia));
 
             foreach (NwPlayer pc in NwModule.Instance.Players)
             {
@@ -34,13 +34,13 @@ namespace Services.ChatSystem
                 else
                 {
                     playerCount++;
-                    stringBuilder.Append($"{pc.ControlledCreature.Name.ColorString(Color.PINK)} | {pc.Area.Name}\n".ColorString(Color.WHITE));
+                    stringBuilder.Append($"{pc.ControlledCreature.Name.ColorString(services.Rgb.Fuchsia)} | {pc.Area.Name}\n".ColorString(services.Rgb.White));
                 }
             }
 
-            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(services.Rgb.White)}\n".ColorString(services.Rgb.Fuchsia));
+            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(services.Rgb.White)}\n".ColorString(services.Rgb.Fuchsia));
+            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(services.Rgb.White)}\n".ColorString(services.Rgb.Fuchsia));
 
             player.SendServerMessage(stringBuilder.ToString());
             return stringBuilder;
@@ -315,7 +315,7 @@ namespace Services.ChatSystem
 
             }
 
-            player.SendServerMessage($"{player.ControlledCreature.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
+            player.SendServerMessage($"{player.ControlledCreature.Name.ColorString(services.Rgb.White)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(services.Rgb.Green));
             player.ExportCharacter();
             return player.ControlledCreature.Xp = xp;
         }

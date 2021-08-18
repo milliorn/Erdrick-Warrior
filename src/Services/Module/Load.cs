@@ -48,7 +48,7 @@ namespace Services.Module
         }
 
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
-        private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
+        private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(services.Rgb.White)} minute.".ColorString(services.Rgb.Purple), TalkVolume.Shout);
 
         private static void InitModuleSwitches()
         {
@@ -133,10 +133,10 @@ namespace Services.Module
             switch (hours)
             {
                 case >= 2:
-                    await NwModule.Instance.SpeakString($"Server reset in {"hours".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
+                    await NwModule.Instance.SpeakString($"Server reset in {"hours".ColorString(services.Rgb.White)}".ColorString(services.Rgb.Purple), TalkVolume.Shout);
                     break;
                 case 1:
-                    await NwModule.Instance.SpeakString($"Server reset in {"hour".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
+                    await NwModule.Instance.SpeakString($"Server reset in {"hour".ColorString(services.Rgb.White)}".ColorString(services.Rgb.Purple), TalkVolume.Shout);
                     break;
                 default:
                     NwModule.Instance.ExportAllCharacters();

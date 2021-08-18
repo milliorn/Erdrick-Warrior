@@ -34,7 +34,7 @@ namespace Services.PlayerCharacter
             dying.Player.ScreamOnDying();
 
             int stabilize = new Random(0).Next(1, 10);
-            dying.Player.SendServerMessage($"Stabilize roll:{stabilize.ToString().ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+            dying.Player.SendServerMessage($"Stabilize roll:{stabilize.ToString().ColorString(services.Rgb.White)}.".ColorString(services.Rgb.Orange));
 
             if (dying.Player.ControlledCreature.HP <= -127)
             {

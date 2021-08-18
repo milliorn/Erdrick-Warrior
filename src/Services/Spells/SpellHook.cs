@@ -23,7 +23,7 @@ namespace Services.Spells
                 if (player.ControlledCreature.Area.GetLocalVariable<int>("NO_CASTING").Value == 1 && spellCast.Harmful)
                 {
                     //SetModuleOverrideSpellScriptFinished
-                    player.SendServerMessage($"{"NO".ColorString(Color.RED)} {"offensive spellcasting".ColorString(Color.ORANGE)} in this area.");
+                    player.SendServerMessage($"{"NO".ColorString(services.Rgb.Red)} {"offensive spellcasting".ColorString(services.Rgb.Orange)} in this area.");
                 }
 
                 //Bugged

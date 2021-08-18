@@ -29,16 +29,16 @@ namespace Services.Client
 
         public static async void PrintLogout(this NwPlayer leave)
         {
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.ControlledCreature.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.BicFileName.ColorString(Color.WHITE)}";
+            string colorString = $"\n{"NAME".ColorString(services.Rgb.Green)}:{leave.ControlledCreature.Name.ColorString(services.Rgb.White)}\n{"ID".ColorString(services.Rgb.Green)}:{leave.CDKey.ColorString(services.Rgb.White)}\n{"BIC".ColorString(services.Rgb.Green)}:{leave.BicFileName.ColorString(services.Rgb.White)}";
 
             if (leave.IsDM)
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(Color.GREEN)}:{colorString}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(services.Rgb.Green)}:{colorString}");
                 Log.Info($"DM Exiting:{$"NAME:{leave.ControlledCreature.Name} ID:{leave.CDKey}"}.");
             }
             else
             {
-                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
+                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(services.Rgb.Lime)}:{colorString}", TalkVolume.Shout);
                 Log.Info($"LOGOUT:{$"NAME:{leave.ControlledCreature.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
             }
         }
@@ -58,17 +58,17 @@ namespace Services.Client
         public static void ValidateDM(this NwPlayer enter)
         {
             string clientDM = $"NAME:{enter.ControlledCreature.Name} ID:{enter.CDKey}";
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.ControlledCreature.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
+            string colorString = $"\n{"NAME".ColorString(services.Rgb.Green)}:{enter.ControlledCreature.Name.ColorString(services.Rgb.White)}\n{"ID".ColorString(services.Rgb.Green)}:{enter.CDKey.ColorString(services.Rgb.White)}\n{"BIC".ColorString(services.Rgb.Green)}:{enter.BicFileName.ColorString(services.Rgb.White)}";
 
             if (enter.IsDM && Module.Extensions.DMList.ContainsKey(enter.CDKey))
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(services.Rgb.Green)}:{colorString}");
                 Log.Info($"DM VERIFIED:{clientDM}.");
 
             }
             else
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:{colorString}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(services.Rgb.Red)}:{colorString}");
                 Log.Info($"DM DENIED:{clientDM}.");
                 enter.BootPlayer("DENIED DM Access.");
             }
@@ -77,8 +77,8 @@ namespace Services.Client
         public static void WelcomeMessage(this NwPlayer enter)
         {
             enter.SendServerMessage("Welcome to the server!".ColorString(SelectRandomColor(new(0, 0, 0), (Random)(new()))));
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.ControlledCreature.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
-            NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
+            string colorString = $"\n{"NAME".ColorString(services.Rgb.Green)}:{enter.ControlledCreature.Name.ColorString(services.Rgb.White)}\n{"ID".ColorString(services.Rgb.Green)}:{enter.CDKey.ColorString(services.Rgb.White)}\n{"BIC".ColorString(services.Rgb.Green)}:{enter.BicFileName.ColorString(services.Rgb.White)}";
+            NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(services.Rgb.Lime)}:{colorString}", TalkVolume.Shout);
             Log.Info($"LOGIN:{$"NAME:{enter.ControlledCreature.Name} ID:{enter.CDKey} BIC:{enter.BicFileName}"}.");
         }
 
@@ -86,23 +86,22 @@ namespace Services.Client
         {
             switch (random.Next(0, 16))
             {
-                case 0: color = Color.BLUE; break;
-                case 1: color = Color.BROWN; break;
-                case 2: color = Color.CYAN; break;
-                case 3: color = Color.GRAY; break;
-                case 4: color = Color.GREEN; break;
-                case 5: color = Color.LIME; break;
-                case 6: color = Color.MAGENTA; break;
-                case 7: color = Color.MAROON; break;
-                case 8: color = Color.NAVY; break;
-                case 9: color = Color.OLIVE; break;
-                case 10: color = Color.ORANGE; break;
-                case 11: color = Color.PINK; break;
-                case 12: color = Color.PURPLE; break;
-                case 13: color = Color.RED; break;
-                case 14: color = Color.ROSE; break;
-                case 15: color = Color.SILVER; break;
-                case 16: color = Color.TEAL; break;
+                case 0: color = services.Rgb.Aqua; break;
+                case 1: color = services.Rgb.Black; break;
+                case 2: color = services.Rgb.Blue; break;
+                case 3: color =services.Rgb.Fuchsia; break;
+                case 4: color = services.Rgb.Gray; break;
+                case 5: color = services.Rgb.Green; break;
+                case 6: color = services.Rgb.Lime; break;
+                case 7: color = services.Rgb.Maroon; break;
+                case 8: color = services.Rgb.Navy; break;
+                case 9: color = services.Rgb.Olive; break;
+                case 10: color = services.Rgb.Purple; break;
+                case 11: color = services.Rgb.Red; break;
+                case 12: color = services.Rgb.Silver; break;
+                case 13: color = services.Rgb.Teal; break;
+                case 14: color = services.Rgb.White; break;
+                case 15: color = services.Rgb.Yellow; break;
             }
             return color;
         }

@@ -6,12 +6,12 @@ namespace Services.Item
     public static class Extensions
     {
         public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
-        public static void NotifyLoot(this NwItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.Possessor.Name.ColorString(Color.PINK)} obtained {acquireItem.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
+        public static void NotifyLoot(this NwItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.Possessor.Name.ColorString(services.Rgb.Fuchsia)} obtained {acquireItem.BaseItemType.ToString().ColorString(services.Rgb.White)}.", 40);
 
         public static string PrintGPValueOnItem(this NwItem nwItem)
             => nwItem.PlotFlag
             ? nwItem.OriginalDescription
-            : (nwItem.Description = $"{"Gold Piece Value:".ColorString(Color.YELLOW)}{nwItem.GoldValue.ToString().ColorString(Color.ORANGE)}\n\n{nwItem.OriginalDescription}");
+            : (nwItem.Description = $"{"Gold Piece Value:".ColorString(services.Rgb.Yellow)}{nwItem.GoldValue.ToString().ColorString(services.Rgb.Orange)}\n\n{nwItem.OriginalDescription}");
 
         public static void RemoveAllTemporaryItemProperties(this NwItem nwItem)
         {
