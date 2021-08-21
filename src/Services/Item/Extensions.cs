@@ -6,12 +6,13 @@ namespace Services.Item
     public static class Extensions
     {
         public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
-        public static void NotifyLoot(this NwItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.Possessor.Name.ColorString(services.Rgb.Fuchsia)} obtained {acquireItem.BaseItemType.ToString().ColorString(services.Rgb.White)}.", 40);
+        public static void NotifyLoot(this NwItem acquireItem) => 
+            SendLootMessageToParty(acquireItem, $"{acquireItem.Possessor.Name.ColorString(ColorConstants.Pink)} obtained {acquireItem.BaseItemType.ToString().ColorString(ColorConstants.White) }", 40);
 
         public static string PrintGPValueOnItem(this NwItem nwItem)
             => nwItem.PlotFlag
             ? nwItem.OriginalDescription
-            : (nwItem.Description = $"{"Gold Piece Value:".ColorString(services.Rgb.Yellow)}{nwItem.GoldValue.ToString().ColorString(services.Rgb.Orange)}\n\n{nwItem.OriginalDescription}");
+            : (nwItem.Description = $"{"Gold Piece Value:".ColorString(ColorConstants.Yellow)}{nwItem.GoldValue.ToString().ColorString(ColorConstants.Orange)}\n\n{nwItem.OriginalDescription}");
 
         public static void RemoveAllTemporaryItemProperties(this NwItem nwItem)
         {
@@ -21,19 +22,22 @@ namespace Services.Item
             }
         }
 
-        public static void SendMessageToAllPartyWithinDistance(this NwPlayer nwPlayer, string message, float distance)
+        public static void SendMessageToAllPartyWithinDistance(this NwGameObject nwPlayer, string message, float distance)
         {
-            foreach (NwPlayer member in nwPlayer.PartyMembers.Where(member => member.ControlledCreature.Distance(nwPlayer) == distance))
+            if (nwPlayer is NwCreature player && player.IsLoginPlayerCharacter)
             {
-                member.SendServerMessage(message);
+                foreach (var member in player.Faction.GetMembers().Where(member => member.Distance(nwPlayer) == distance))
+                {
+                    member.LoginPlayer.SendServerMessage(message);
+                }
             }
         }
 
         public static void SendLootMessageToParty(this NwItem acquireItem, string message, float distance)
         {
-            if (acquireItem.Possessor is NwPlayer player && !player.IsDM)
+            if (acquireItem.Possessor.IsPlayerControlled(out NwPlayer player) && !player.IsDM)
             {
-                player.SendMessageToAllPartyWithinDistance(message, distance);
+                acquireItem.Possessor.SendMessageToAllPartyWithinDistance(message, distance);
                 player.SendServerMessage(message);
             }
         }

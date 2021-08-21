@@ -93,7 +93,7 @@ namespace Services.ChatSystem
                     chat.Sender.SetVisual(chatArray);
                     break;
                 case "lfg":
-                    NwModule.Instance.SpeakString($"{chat.Sender.ControlledCreature.Name.ColorString(services.Rgb.White)} is looking for a party!", TalkVolume.Shout);
+                    NwModule.Instance.SpeakString($"{chat.Sender.ControlledCreature.Name.ColorString(ColorConstants.White)} is looking for a party!", TalkVolume.Shout);
                     break;
                 case "save":
                     chat.Sender.ExportCharacter();

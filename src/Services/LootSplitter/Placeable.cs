@@ -37,23 +37,23 @@ namespace Services.LootSplitter
             if (obj.DisturbedItem.BaseItemType == BaseItemType.Gold)
             {
                 GiveGoldEqually(pc.ControllingPlayer, obj.DisturbedItem.StackSize);
-                CloneDestroy(obj, pc.ControllingPlayer);
+                CloneDestroy(obj);
             }
             else if (obj.DisturbedItem.HasInventory)
             {
-                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell inventory items {pc.Name.ColorString(services.Rgb.White)}!".ColorString(services.Rgb.Orange));
-                CloneDestroy(obj, pc.ControllingPlayer);
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell inventory items {pc.Name.ColorString(ColorConstants.White)}!".ColorString(ColorConstants.Orange));
+                CloneDestroy(obj);
 
             }
             else if (obj.DisturbedItem.PlotFlag)
             {
-                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell plot items {pc.Name.ColorString(services.Rgb.White)}!".ColorString(services.Rgb.Orange));
-                CloneDestroy(obj, pc.ControllingPlayer);
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} cannot sell plot items {pc.Name.ColorString(ColorConstants.White)}!".ColorString(ColorConstants.Orange));
+                CloneDestroy(obj);
             }
             else
             {
                 int itemValue = obj.DisturbedItem.GoldValue / 10 > 0 ? obj.DisturbedItem.GoldValue / 10 : 1;
-                pc.ControllingPlayer.FloatingTextString($"{pc.Name} sold {pc.Name.ColorString(services.Rgb.White)} for {itemValue}!".ColorString(services.Rgb.Green));
+                pc.ControllingPlayer.FloatingTextString($"{pc.Name} sold {pc.Name.ColorString(ColorConstants.White)} for {itemValue}!".ColorString(ColorConstants.Green));
                 GiveGoldEqually(pc.ControllingPlayer, itemValue);
             }
         }
@@ -64,7 +64,7 @@ namespace Services.LootSplitter
 
             if (pc.PartyMembers.Count() == 1) return;
 
-            pc.FloatingTextString($"{goldDivided.ToString().ColorString(services.Rgb.White)}gp given to each player after splitting {itemValue.ToString().ColorString(services.Rgb.White)} from {pc.ControlledCreature.Name.ColorString(services.Rgb.White)}.");
+            pc.FloatingTextString($"{goldDivided.ToString().ColorString(ColorConstants.White)}gp given to each player after splitting {itemValue.ToString().ColorString(ColorConstants.White)} from {pc.ControlledCreature.Name.ColorString(ColorConstants.White)}.");
             foreach (NwPlayer player in pc.PartyMembers)
             {
                 logger.Info(pc.ControlledCreature.Name);
@@ -72,6 +72,6 @@ namespace Services.LootSplitter
             }
         }
 
-        private static void CloneDestroy(PlaceableEvents.OnDisturbed obj, NwPlayer pc) => obj.DisturbedItem.Clone(pc).Destroy();
+        private static void CloneDestroy(PlaceableEvents.OnDisturbed obj) => obj.DisturbedItem.Clone(obj.Disturber).Destroy();
     }
 }

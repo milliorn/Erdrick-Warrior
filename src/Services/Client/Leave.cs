@@ -19,7 +19,7 @@ namespace Services.Client
                 if (player.IsDM) return;
 
                 player.DeathLog();
-                player.StoreHitPoints();
+                //player.StoreHitPoints();
             }
         };
     }

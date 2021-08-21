@@ -13,17 +13,16 @@ namespace Services.Spells
         private void OnSpellHooked(CallInfo callInfo)
         {
             SpellEvents.OnSpellCast spellCast = new SpellEvents.OnSpellCast();
-
+            
             if (spellCast.Caster.IsPlayerControlled(out NwPlayer player))
             {
                 Spell spell = spellCast.Spell;
 
                 ReplenishCantrips(spellCast);
-
-                if (player.ControlledCreature.Area.GetLocalVariable<int>("NO_CASTING").Value == 1 && spellCast.Harmful)
+                
+                foreach (var _ in spellCast.Caster.Area.LocalVariables.Where(things => things.Name == "NO_CASTING" && things.Equals(1) && spellCast.Harmful))
                 {
-                    //SetModuleOverrideSpellScriptFinished
-                    player.SendServerMessage($"{"NO".ColorString(services.Rgb.Red)} {"offensive spellcasting".ColorString(services.Rgb.Orange)} in this area.");
+                    player.SendServerMessage($"{"NO".ColorString(ColorConstants.Red)} {"offensive spellcasting".ColorString(ColorConstants.Orange)} in this area.");
                 }
 
                 //Bugged
@@ -33,7 +32,7 @@ namespace Services.Spells
 
         private static void BuffPetsAsync(SpellEvents.OnSpellCast spellCast, NwPlayer player, Spell spell)
         {
-            foreach (var pet in player.ControlledCreature.Faction.GetMembers<NwPlayer>().Where(p => !p.IsDM && !p.IsPlayerDM))
+            foreach (var pet in player.ControlledCreature.Faction.GetMembers())
             {
                 switch (pet.AssociateType)
                 {

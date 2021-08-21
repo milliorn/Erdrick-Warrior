@@ -14,7 +14,7 @@ namespace Services.Area
         [ScriptHandler("area_cleanup")]
         public void Exit(CallInfo callinfo)
         {
-            if (callinfo.TryGetEvent(out AreaEvents.OnExit onLeave) && !onLeave.Area.FindObjectsOfTypeInArea<NwPlayer>().Any())
+            if (callinfo.TryGetEvent(out AreaEvents.OnExit onLeave) && onLeave.Area.FindObjectsOfTypeInArea<NwCreature>().Any(x => x.IsLoginPlayerCharacter))
             {
                 onLeave.CleanupCreatures();
                 onLeave.CleanupItems();

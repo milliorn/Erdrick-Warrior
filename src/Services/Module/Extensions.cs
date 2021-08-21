@@ -15,7 +15,7 @@ namespace Services.Module
         public static void SaveCharacter(this NwPlayer player)
         {
             player.ExportCharacter();
-            player.SendServerMessage($"{player.BicFileName.ColorString(services.Rgb.Green)}.bic file has been saved.".ColorString(services.Rgb.White));
+            player.SendServerMessage($"{player.BicFileName.ColorString(ColorConstants.Green)}.bic file has been saved.".ColorString(ColorConstants.White));
         }
     }
 }

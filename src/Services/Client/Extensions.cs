@@ -12,33 +12,25 @@ namespace Services.Client
         /* Auto-Kill if we logout while in combat state */
         public static int DeathLog(this NwPlayer leave) => leave.ControlledCreature.IsInCombat ? leave.ControlledCreature.HP = -1 : leave.ControlledCreature.HP;
         public static string StripDashes(string uuid) => uuid = uuid.Replace("-", "");
-        public static void StoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.ControlledCreature.UUID.ToUUIDString())).Value = player.ControlledCreature.HP;
+        //public static void StoreHitPoints(this NwPlayer player) => player.CampaignVariable<int>().Value = player.ControlledCreature.HP;
         public static void RestoreHitPoints(this NwPlayer player)
         {
             var id = player.ControlledCreature.UUID.ToUUIDString();
-
-            if (player.GetCampaignVariable<int>("Hit_Points", id) == null)
-            {
-                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
-            }
-            else
-            {
-                player.GetCampaignVariable<int>("Hit_Points", id).Value = player.ControlledCreature.HP;
-            }
+            //player.ControlledCreature.GetObjectVariable<CampaignVariable>("Hit_Points").Value = player.ControlledCreature.HP;
         }
 
         public static async void PrintLogout(this NwPlayer leave)
         {
-            string colorString = $"\n{"NAME".ColorString(services.Rgb.Green)}:{leave.ControlledCreature.Name.ColorString(services.Rgb.White)}\n{"ID".ColorString(services.Rgb.Green)}:{leave.CDKey.ColorString(services.Rgb.White)}\n{"BIC".ColorString(services.Rgb.Green)}:{leave.BicFileName.ColorString(services.Rgb.White)}";
+            string colorString = $"\n{"NAME".ColorString(ColorConstants.Green)}:{leave.ControlledCreature.Name.ColorString(ColorConstants.White)}\n{"ID".ColorString(ColorConstants.Green)}:{leave.CDKey.ColorString(ColorConstants.White)}\n{"BIC".ColorString(ColorConstants.Green)}:{leave.BicFileName.ColorString(ColorConstants.White)}";
 
             if (leave.IsDM)
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(services.Rgb.Green)}:{colorString}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(ColorConstants.Green)}:{colorString}");
                 Log.Info($"DM Exiting:{$"NAME:{leave.ControlledCreature.Name} ID:{leave.CDKey}"}.");
             }
             else
             {
-                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(services.Rgb.Lime)}:{colorString}", TalkVolume.Shout);
+                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(ColorConstants.Lime)}:{colorString}", TalkVolume.Shout);
                 Log.Info($"LOGOUT:{$"NAME:{leave.ControlledCreature.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
             }
         }
@@ -58,17 +50,17 @@ namespace Services.Client
         public static void ValidateDM(this NwPlayer enter)
         {
             string clientDM = $"NAME:{enter.ControlledCreature.Name} ID:{enter.CDKey}";
-            string colorString = $"\n{"NAME".ColorString(services.Rgb.Green)}:{enter.ControlledCreature.Name.ColorString(services.Rgb.White)}\n{"ID".ColorString(services.Rgb.Green)}:{enter.CDKey.ColorString(services.Rgb.White)}\n{"BIC".ColorString(services.Rgb.Green)}:{enter.BicFileName.ColorString(services.Rgb.White)}";
+            string colorString = $"\n{"NAME".ColorString(ColorConstants.Green)}:{enter.ControlledCreature.Name.ColorString(ColorConstants.White)}\n{"ID".ColorString(ColorConstants.Green)}:{enter.CDKey.ColorString(ColorConstants.White)}\n{"BIC".ColorString(ColorConstants.Green)}:{enter.BicFileName.ColorString(ColorConstants.White)}";
 
             if (enter.IsDM && Module.Extensions.DMList.ContainsKey(enter.CDKey))
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(services.Rgb.Green)}:{colorString}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(ColorConstants.Green)}:{colorString}");
                 Log.Info($"DM VERIFIED:{clientDM}.");
 
             }
             else
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(services.Rgb.Red)}:{colorString}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(ColorConstants.Red)}:{colorString}");
                 Log.Info($"DM DENIED:{clientDM}.");
                 enter.BootPlayer("DENIED DM Access.");
             }
@@ -77,8 +69,8 @@ namespace Services.Client
         public static void WelcomeMessage(this NwPlayer enter)
         {
             enter.SendServerMessage("Welcome to the server!".ColorString(SelectRandomColor(new(0, 0, 0), (Random)(new()))));
-            string colorString = $"\n{"NAME".ColorString(services.Rgb.Green)}:{enter.ControlledCreature.Name.ColorString(services.Rgb.White)}\n{"ID".ColorString(services.Rgb.Green)}:{enter.CDKey.ColorString(services.Rgb.White)}\n{"BIC".ColorString(services.Rgb.Green)}:{enter.BicFileName.ColorString(services.Rgb.White)}";
-            NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(services.Rgb.Lime)}:{colorString}", TalkVolume.Shout);
+            string colorString = $"\n{"NAME".ColorString(ColorConstants.Green)}:{enter.ControlledCreature.Name.ColorString(ColorConstants.White)}\n{"ID".ColorString(ColorConstants.Green)}:{enter.CDKey.ColorString(ColorConstants.White)}\n{"BIC".ColorString(ColorConstants.Green)}:{enter.BicFileName.ColorString(ColorConstants.White)}";
+            NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(ColorConstants.Lime)}:{colorString}", TalkVolume.Shout);
             Log.Info($"LOGIN:{$"NAME:{enter.ControlledCreature.Name} ID:{enter.CDKey} BIC:{enter.BicFileName}"}.");
         }
 
@@ -86,22 +78,22 @@ namespace Services.Client
         {
             switch (random.Next(0, 16))
             {
-                case 0: color = services.Rgb.Aqua; break;
-                case 1: color = services.Rgb.Black; break;
-                case 2: color = services.Rgb.Blue; break;
-                case 3: color =services.Rgb.Fuchsia; break;
-                case 4: color = services.Rgb.Gray; break;
-                case 5: color = services.Rgb.Green; break;
-                case 6: color = services.Rgb.Lime; break;
-                case 7: color = services.Rgb.Maroon; break;
-                case 8: color = services.Rgb.Navy; break;
-                case 9: color = services.Rgb.Olive; break;
-                case 10: color = services.Rgb.Purple; break;
-                case 11: color = services.Rgb.Red; break;
-                case 12: color = services.Rgb.Silver; break;
-                case 13: color = services.Rgb.Teal; break;
-                case 14: color = services.Rgb.White; break;
-                case 15: color = services.Rgb.Yellow; break;
+                case 0: color = ColorConstants.Cyan; break;
+                case 1: color = ColorConstants.Black; break;
+                case 2: color = ColorConstants.Blue; break;
+                case 3: color = ColorConstants.Pink; break;
+                case 4: color = ColorConstants.Gray; break;
+                case 5: color = ColorConstants.Green; break;
+                case 6: color = ColorConstants.Lime; break;
+                case 7: color = ColorConstants.Maroon; break;
+                case 8: color = ColorConstants.Navy; break;
+                case 9: color = ColorConstants.Olive; break;
+                case 10: color = ColorConstants.Purple; break;
+                case 11: color = ColorConstants.Red; break;
+                case 12: color = ColorConstants.Silver; break;
+                case 13: color = ColorConstants.Teal; break;
+                case 14: color = ColorConstants.White; break;
+                case 15: color = ColorConstants.Yellow; break;
             }
             return color;
         }
@@ -195,7 +187,7 @@ namespace Services.Client
             "Fukah",
             "Fuken",
             "fuker",
-            "Fukin",
+            "Fukien",
             "Fukk",
             "Fukkah",
             "Fukken",
@@ -449,7 +441,7 @@ namespace Services.Client
             "dego",
             "dick*",
             "dike*",
-            "dupa",
+            "dap",
             "dziwka",
             "ejackulate",
             "Ekrem*",
