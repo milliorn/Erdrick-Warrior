@@ -28,7 +28,7 @@
         <OutputPath>bin\Release\Plugins\$(MSBuildProjectName)</OutputPath>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NWN.Anvil" Version="8193.26.0-rc.2" ExcludeAssets="runtime" />
+    <PackageReference Include="NWN.Anvil" Version="8193.26.0-rc.5" ExcludeAssets="runtime" />
     <PackageReference Include="Discord.Webhook" Version="1.0.8"/>
     <PackageReference Include="discord-webhook-client" Version="3.1.0"/>
   </ItemGroup>
