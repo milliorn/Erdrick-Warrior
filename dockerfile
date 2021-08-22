@@ -8,11 +8,11 @@ RUN nasher pack
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ADD ./src/services /Build
 # build EldritchWarrior code
-WORKDIR /Build
+WORKDIR /Build/EldritchWarrior/
 RUN dotnet publish -c Release -o out 
 
 # Build the final NWN server image
-FROM nwndotnet/anvil:8193.26.0-rc.2
+FROM nwndotnet/anvil:8193.26.0-rc.5
 # copy module
 COPY --from=moduleBuild /src/moduleBuild/*.mod /nwn/data/data/mod
 # copy built dll's
