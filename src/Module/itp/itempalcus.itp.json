@@ -986,6 +986,22 @@
                 "type": "byte",
                 "value": 23
               },
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Asterius Quiver"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "itm_ammo_creator"
+                    }
+                  }
+                ]
+              },
               "STRREF": {
                 "type": "dword",
                 "value": 6699
@@ -1057,22 +1073,6 @@
               "ID": {
                 "type": "byte",
                 "value": 0
-              },
-              "LIST": {
-                "type": "list",
-                "value": [
-                  {
-                    "__struct_id": 0,
-                    "NAME": {
-                      "type": "cexostring",
-                      "value": "Asterius Quiver"
-                    },
-                    "RESREF": {
-                      "type": "resref",
-                      "value": "itm_ammo_creator"
-                    }
-                  }
-                ]
               },
               "STRREF": {
                 "type": "dword",

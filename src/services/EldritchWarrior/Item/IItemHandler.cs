@@ -29,7 +29,7 @@ namespace EldritchWarrior.Item
 
         private void OnActivateItem(ModuleEvents.OnActivateItem activateItem)
         {
-            if (itemHandlers.TryGetValue(activateItem.ActivatedItem.Tag, out IItemHandler handler))
+            if (itemHandlers.TryGetValue(activateItem.ActivatedItem.Tag, out var handler))
             {
                 handler.HandleActivateItem(activateItem);
             }

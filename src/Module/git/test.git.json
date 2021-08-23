@@ -14349,6 +14349,683 @@
           "type": "float",
           "value": -0.0
         }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 29
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 250
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 1
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {
+            "0": "Use this item to replenish stacks of ammunition to their maximum stack size.  You will not be able to sell these stacks once you regenerate the stack.\n\nArrows\nBolts\nBullets\nDart\nGrenades\nShuriken\nThrowing Axes"
+          }
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {
+            "0": ""
+          }
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "type": "cexolocstring",
+          "value": {
+            "0": "Asterius Quiver"
+          }
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 90
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "ChanceAppear": {
+                "type": "byte",
+                "value": 100
+              },
+              "CostTable": {
+                "type": "byte",
+                "value": 3
+              },
+              "CostValue": {
+                "type": "word",
+                "value": 6
+              },
+              "Param1": {
+                "type": "byte",
+                "value": 255
+              },
+              "Param1Value": {
+                "type": "byte",
+                "value": 0
+              },
+              "PropertyName": {
+                "type": "word",
+                "value": 15
+              },
+              "Subtype": {
+                "type": "word",
+                "value": 329
+              }
+            }
+          ]
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 1
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "itm_ammo_creator"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "itm_ammo_creator"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 10.9115
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 11.0873
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 20
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 0
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 0
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "id": 1517,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 11
+        },
+        "ModelPart2": {
+          "type": "byte",
+          "value": 11
+        },
+        "ModelPart3": {
+          "type": "byte",
+          "value": 11
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": []
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 99
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "NW_WAMAR001"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_wamar001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 6.7094
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 19.2514
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 25
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 0
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 0
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "id": 1519,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 11
+        },
+        "ModelPart2": {
+          "type": "byte",
+          "value": 11
+        },
+        "ModelPart3": {
+          "type": "byte",
+          "value": 11
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": []
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 99
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "NW_WAMBO001"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_wambo001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 6.776
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 17.7854
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 27
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 0
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 0
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "id": 1521,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 11
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": []
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 99
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "NW_WAMBU001"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_wambu001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 6.8294
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 16.8392
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 31
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 0
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 0
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "id": 1525,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 11
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": []
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 50
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "NW_WTHDT001"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_wthdt001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 6.8023
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 15.9338
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 59
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 0
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 0
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "id": 1553,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 11
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": []
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 50
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "NW_WTHSH001"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_wthsh001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 6.6257
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 14.5105
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      {
+        "__struct_id": 0,
+        "AddCost": {
+          "type": "dword",
+          "value": 0
+        },
+        "BaseItem": {
+          "type": "int",
+          "value": 63
+        },
+        "Charges": {
+          "type": "byte",
+          "value": 0
+        },
+        "Cost": {
+          "type": "dword",
+          "value": 0
+        },
+        "Cursed": {
+          "type": "byte",
+          "value": 0
+        },
+        "DescIdentified": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Description": {
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "Identified": {
+          "type": "byte",
+          "value": 1
+        },
+        "LocalizedName": {
+          "id": 1557,
+          "type": "cexolocstring",
+          "value": {}
+        },
+        "ModelPart1": {
+          "type": "byte",
+          "value": 11
+        },
+        "ModelPart2": {
+          "type": "byte",
+          "value": 11
+        },
+        "ModelPart3": {
+          "type": "byte",
+          "value": 11
+        },
+        "Plot": {
+          "type": "byte",
+          "value": 0
+        },
+        "PropertiesList": {
+          "type": "list",
+          "value": []
+        },
+        "StackSize": {
+          "type": "word",
+          "value": 50
+        },
+        "Stolen": {
+          "type": "byte",
+          "value": 0
+        },
+        "Tag": {
+          "type": "cexostring",
+          "value": "NW_WTHAX001"
+        },
+        "TemplateResRef": {
+          "type": "resref",
+          "value": "nw_wthax001"
+        },
+        "XOrientation": {
+          "type": "float",
+          "value": 0.0
+        },
+        "XPosition": {
+          "type": "float",
+          "value": 6.8127
+        },
+        "YOrientation": {
+          "type": "float",
+          "value": 1.0
+        },
+        "YPosition": {
+          "type": "float",
+          "value": 12.9417
+        },
+        "ZPosition": {
+          "type": "float",
+          "value": 0.0
+        }
       }
     ]
   },
