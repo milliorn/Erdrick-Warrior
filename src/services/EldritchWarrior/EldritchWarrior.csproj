@@ -6,7 +6,6 @@
     <IsPackable>false</IsPackable>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <RootNamespace>Services</RootNamespace>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
